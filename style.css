@@ -16,12 +16,11 @@ body{
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* coloca mais pra cima */
+    align-items: flex-start;
     height: 100vh;
-    padding-top: 10px; /* controla o quanto desce */
+    padding-top: 10px;
 }
 
-/* moldura por cima */
 .moldura{
     width: 800px;
 }
@@ -38,7 +37,7 @@ body{
 
 .botoes{
     position: absolute;
-    top: 600px; /* aumente esse valor */
+    top: 600px; 
     left: 50%;
     transform: translateX(-50%);
     display: flex;
