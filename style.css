@@ -5,10 +5,13 @@
 
 body{
     background-image: url("./img/inicio.png");
+    background-size: 100% 100%;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
+    background-attachment: fixed;
+    overflow: hidden;
 }
 
 /* área da tela inicial */
@@ -37,7 +40,7 @@ body{
 
 .botoes{
     position: absolute;
-    top: 600px; 
+    top: 800px; 
     left: 50%;
     transform: translateX(-50%);
     display: flex;
