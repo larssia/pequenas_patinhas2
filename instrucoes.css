@@ -54,6 +54,8 @@ body{
     gap: 15px;
     margin-top: 300px; 
     margin-left: 600px;    
+    margin-top: 375px; 
+    margin-left: 750px;    
     background-color: rgba(253, 242, 227, 0.9);
     padding: 20px;
     border-radius: 20px;
@@ -105,7 +107,7 @@ body{
 
 .botoes{
     position: absolute;
-    bottom: 40px;
+    top: 800px; 
     left: 50%;
     transform: translateX(-50%);
     display: flex;

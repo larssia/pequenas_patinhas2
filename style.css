@@ -11,6 +11,7 @@ body{
     background-repeat: no-repeat;
     background-attachment: fixed;
     height: 100vh;
+    background-attachment: fixed;
     overflow: hidden;
 }
 
@@ -40,7 +41,7 @@ body{
 
 .botoes{
     position: absolute;
-    top: 600px; 
+    top: 800px; 
     left: 50%;
     transform: translateX(-50%);
     display: flex;
