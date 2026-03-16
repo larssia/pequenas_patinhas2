@@ -12,15 +12,15 @@ let fundoX = 0
 //MOVIMENTA O FURAO KKK
 document.addEventListener("keydown", (e) => {
 
-    if (e.key == "ArrowUp") {
+    if (e.key == "w" || e.key == "ArrowUp") {
         furao.pular()
     }
 
-    if (e.key == "ArrowLeft") {
+    if (e.key == "a" || e.key == "ArrowLeft") {
         dx = -1
     }
 
-    if (e.key == "ArrowRight") {
+    if (e.key == "d" || e.key == "ArrowRight") {
         dx = 1
     }
 
