@@ -60,3 +60,9 @@ body{
     text-decoration: none;
     display: inline-block;
 }
+
+.sobre{
+    background-image: url('./img/icons_furao.png');
+    text-decoration: none;
+    
+}

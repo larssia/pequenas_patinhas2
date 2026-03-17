@@ -1,9 +1,10 @@
 class Obj {
-    constructor(x, y) {
+    constructor(x, y, w, h, a) {
         this.x = x
         this.y = y
-        this.w = 160
-        this.h = 130
+        this.w = w
+        this.h = h
+        this.a = a
         this.vel = 2
         this.gravidade = 0.6
         this.impulso = -15
@@ -16,9 +17,17 @@ class Obj {
         this.frameDelay = 6
 
         this.img = new Image()
-        this.img.src = "./img/mov_furao.png"
+        this.img.src = this.a
     }
 
+    des_fruta(){
+        let img = new Image()
+        img.src = this.a
+        des.drawImage(this.img, this.x, this.y, this.w, this.h)
+    }
+}
+
+class Furao extends Obj{
     desenhar(ctx) {
 
         let frameWidth = 120
@@ -44,6 +53,19 @@ class Obj {
         if (this.noChao) {
             this.velY = this.impulso
             this.noChao = false
+        }
+    }
+
+    colid(obj) {
+        if (
+            this.x < obj.x + obj.w &&
+            this.x + this.w > obj.x &&
+            this.y < obj.y + obj.h &&
+            this.y + this.h > obj.y
+        ) {
+            return true
+        } else {
+            return false
         }
     }
 
@@ -84,6 +106,24 @@ class Obj {
 
         } else {
             this.frame = 0
+        }
+    }
+}
+
+class Frutas extends Obj {
+
+    vel = 3
+
+    recomeca() {
+        this.x = 1300
+        this.y = Math.floor(Math.random() * (638 - 400) + 400)
+    }
+
+    mov_fruta() {
+        this.x -= this.vel
+
+        if (this.x <= -100) {
+            this.recomeca()
         }
     }
 }
