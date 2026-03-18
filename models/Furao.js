@@ -5,9 +5,10 @@ class Obj {
         this.w = w
         this.h = h
         this.a = a
+
         this.vel = 2
-        this.gravidade = 0.6
-        this.impulso = -15
+        this.gravidade = 0.3
+        this.impulso = -12
         this.velY = 0
         this.noChao = false
         this.chaoY = y
@@ -16,25 +17,31 @@ class Obj {
         this.frameTimer = 0
         this.frameDelay = 6
 
-        this.img = new Image()
+        this.img = new Image() 
         this.img.src = this.a
+        
+        // this.img = new Image()
+        // this.img.src = './img/mov_furao.png' 
     }
 
-    des_fruta(){
-        let img = new Image()
-        img.src = this.a
+    des_fruta() {
         des.drawImage(this.img, this.x, this.y, this.w, this.h)
     }
 }
 
-class Furao extends Obj{
+class Furao extends Obj {
+
     desenhar(ctx) {
-
-        let frameWidth = 120
-        let frameHeight = 72
-
+        let frameWidth = 120   
+        let frameHeight = 72   
         let sx = this.frame * frameWidth
-        let sy = 0
+        let sy = 0 // Linha 0 (Corrida) por padrão
+
+        // SE ESTIVER NO AR (PULANDO)
+        if (!this.noChao) {
+            // Se o pulo for a 2ª linha, use 72. Se for a 3ª, use 144.
+            sy = 72
+        }
 
         ctx.drawImage(
             this.img,
@@ -57,70 +64,56 @@ class Furao extends Obj{
     }
 
     colid(obj) {
-        if (
+        return (
             this.x < obj.x + obj.w &&
             this.x + this.w > obj.x &&
             this.y < obj.y + obj.h &&
             this.y + this.h > obj.y
-        ) {
-            return true
-        } else {
-            return false
-        }
+        )
     }
 
     atualizar(dirX) {
-
-        this.x += dirX * this.vel
-
-        // teleporte nas bordas da tela
-        if (this.x > 1200) {
-            this.x = -this.w
-        }
-
-        if (this.x < -this.w) {
-            this.x = 1200
-        }
-
+        // Lógica de Gravidade
         this.velY += this.gravidade
         this.y += this.velY
 
+        // Verificação do Chão
         if (this.y >= this.chaoY) {
             this.y = this.chaoY
             this.velY = 0
             this.noChao = true
+        } else {
+            this.noChao = false
         }
 
-        if (dirX != 0) {
-
+        // Controle de Animação
+        if (!this.noChao) {
+            this.frame = 1 
+        } else if (dirX != 0) {
             this.frameTimer++
 
             if (this.frameTimer > this.frameDelay) {
                 this.frame++
                 this.frameTimer = 0
 
-                if (this.frame > 5) {
-                    this.frame = 0
-                }
+                if (this.frame > 5) this.frame = 0
             }
-
         } else {
-            this.frame = 0
+            this.frame = 0 // Frame de "parado"
         }
     }
 }
 
 class Frutas extends Obj {
-
-    vel = 3
+    vel = 2
 
     recomeca() {
         this.x = 1300
         this.y = Math.floor(Math.random() * (638 - 400) + 400)
     }
 
-    mov_fruta() {
-        this.x -= this.vel
+    mov_fruta(dx) {
+        this.x -= this.vel + (dx * 3)
 
         if (this.x <= -100) {
             this.recomeca()
