@@ -1,11 +1,11 @@
 const tela = document.getElementById("des")
 const des = tela.getContext("2d")
 
-const frutas = new Frutas(1000, 400, 45, 25, './img/morango.png')
-const frutas2 = new Frutas(1000, 400, 45, 25, './img/abacaxi.png')
-const frutas3 = new Frutas(1000, 400, 45, 25, './img/banana.png')
-const frutas4 = new Frutas(1000, 400, 45, 25, './img/maca.png')
-const furao = new Furao(10, 530, 200, 120, './img/mov_furao.png')
+const frutas = new Frutas(1000, 350, 45, 25, './img/morango.png')
+const frutas2 = new Frutas(1000, 350, 45, 25, './img/abacaxi.png')
+const frutas3 = new Frutas(1000, 350, 45, 25, './img/banana.png')
+const frutas4 = new Frutas(1000, 350, 45, 25, './img/maca.png')
+const furao = new Furao(10, 520, 200, 120, './img/mov_furao.png')
 
 const fundoImg = new Image()
 fundoImg.src = "./img/fundo.png"
@@ -20,28 +20,47 @@ let fundoAtual = 0
 //MOVIMENTA O FURAO KKK
 document.addEventListener("keydown", (e) => {
 
-    if (e.key == "w" || e.key == "ArrowUp") {
+    if (e.key == "w" || e.key == "W" || e.key == "ArrowUp") {
         furao.pular()
     }
 
-    if (e.key == "a" || e.key == "ArrowLeft") {
-        dx = -1
-    }
-
-    if (e.key == "d" || e.key == "ArrowRight") {
+    if (e.key == "d" || e.key == "D" || e.key == "ArrowRight") {
         dx = 1
     }
 
 })
 
-//PARA O MOVIMNETO DO FURAO
+// PARA O MOVIMENTO DO FURAO
 document.addEventListener("keyup", (e) => {
 
-    if (e.key == "ArrowLeft" || e.key == "ArrowRight") {
+    if (
+        e.key == "a" || e.key == "A" ||
+        e.key == "d" || e.key == "D" ||
+        e.key == "ArrowRight"
+    ) {
         dx = 0
     }
 
 })
+
+function pontuacao() {
+    if (furao.point(frutas)) {
+        furao.pontos += 5
+        frutas.recomeca()
+    }
+    if (furao.point(frutas2)) {
+        furao.pontos += 5
+        frutas.recomeca()
+    }
+    if (furao.point(frutas3)) {
+        furao.pontos += 5
+        frutas.recomeca()
+    }
+    if (furao.point(frutas4)) {
+        furao.pontos += 5
+        frutas.recomeca()
+    }
+}
 
 
 function desenha() {
@@ -108,6 +127,7 @@ function main() {
 
     desenha()
     atualiza()
+    pontuacao()
 
     requestAnimationFrame(main)
 }

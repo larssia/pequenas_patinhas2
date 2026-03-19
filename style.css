@@ -41,7 +41,7 @@ body{
 
 .botoes{
     position: absolute;
-    top: 650px; 
+    top: 800px; 
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -61,8 +61,23 @@ body{
     display: inline-block;
 }
 
-.sobre{
-    background-image: url('./img/icons_furao.png');
+.sobre a{
+    position: absolute;
+    top: 50px;
+    left: 85%;
+    transform: translateX(50%);
+    display: flex;
+    align-items: center;
+    gap: 120px; 
+
+    background-color: #efe5d6;
+    color: #e06aa3;
+    border: 1.5px solid #703350;
+    font-family: "Freckle Face", cursive;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px 30px;
+    border-radius: 1000px;
     text-decoration: none;
-    
+    z-index: 999;
 }

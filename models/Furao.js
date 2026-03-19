@@ -72,6 +72,14 @@ class Furao extends Obj {
         )
     }
 
+    point(obj){
+        if(obj.x <= -100){
+            return true
+        }else{
+            return false
+        }
+    }
+
     atualizar(dirX) {
         // Lógica de Gravidade
         this.velY += this.gravidade
