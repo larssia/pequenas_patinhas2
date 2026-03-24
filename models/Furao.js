@@ -17,9 +17,9 @@ class Obj {
         this.frameTimer = 0
         this.frameDelay = 6
 
-        this.img = new Image() 
+        this.img = new Image()
         this.img.src = this.a
-        
+
         // this.img = new Image()
         // this.img.src = './img/mov_furao.png' 
     }
@@ -27,17 +27,20 @@ class Obj {
     des_fruta() {
         des.drawImage(this.img, this.x, this.y, this.w, this.h)
     }
+    des_galhos() {
+        des.drawImage(this.img, this.x, this.y, this.w, this.h)
+    }
 }
 
 class Furao extends Obj {
 
     desenhar(ctx) {
-        let frameWidth = 120   
-        let frameHeight = 72   
+        let frameWidth = 120
+        let frameHeight = 72
         let sx = this.frame * frameWidth
-        let sy = 0 // Linha 0 (Corrida) por padrão
+        let sy = 0 // Linha 0 corrida
 
-        // SE ESTIVER NO AR (PULANDO)
+        // SE ESTIVER NO AR 
         if (!this.noChao) {
             // Se o pulo for a 2ª linha, use 72. Se for a 3ª, use 144.
             sy = 72
@@ -60,6 +63,7 @@ class Furao extends Obj {
         if (this.noChao) {
             this.velY = this.impulso
             this.noChao = false
+            this.frame = 0
         }
     }
 
@@ -72,10 +76,10 @@ class Furao extends Obj {
         )
     }
 
-    point(obj){
-        if(obj.x <= -100){
+    point(obj) {
+        if (obj.x <= -100) {
             return true
-        }else{
+        } else {
             return false
         }
     }
@@ -93,21 +97,31 @@ class Furao extends Obj {
         } else {
             this.noChao = false
         }
+        // ANIMAÇÃO
+        this.frameTimer++
 
-        // Controle de Animação
-        if (!this.noChao) {
-            this.frame = 1 
-        } else if (dirX != 0) {
-            this.frameTimer++
+        if (this.frameTimer >= this.frameDelay) {
+            this.frameTimer = 0
 
-            if (this.frameTimer > this.frameDelay) {
+            // PULO
+            if (!this.noChao) {
                 this.frame++
-                this.frameTimer = 0
 
+                // LIMITA PRA NÃO SUMIR
+                if (this.frame > 5) this.frame = 5
+            }
+
+            // CORRIDA
+            else if (dirX != 0) {
+                this.frame++
+                // LIMITA PRA PRIMEIRA LINHA
                 if (this.frame > 5) this.frame = 0
             }
-        } else {
-            this.frame = 0 // Frame de "parado"
+
+            // PARADO
+            else {
+                this.frame = 0
+            }
         }
     }
 }
@@ -121,6 +135,23 @@ class Frutas extends Obj {
     }
 
     mov_fruta(dx) {
+        this.x -= this.vel + (dx * 3)
+
+        if (this.x <= -100) {
+            this.recomeca()
+        }
+    }
+}
+
+class Galhos extends Obj {
+    vel = 2
+
+    recomeca() {
+        this.x = 1300
+        this.y = Math.floor(Math.random() * (638 - 400) + 400)
+    }
+
+    mov_galho(dx) {
         this.x -= this.vel + (dx * 3)
 
         if (this.x <= -100) {

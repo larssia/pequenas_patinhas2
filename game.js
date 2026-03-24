@@ -1,10 +1,25 @@
 const tela = document.getElementById("des")
 const des = tela.getContext("2d")
 
-const frutas = new Frutas(1000, 350, 45, 25, './img/morango.png')
-const frutas2 = new Frutas(1000, 350, 45, 25, './img/abacaxi.png')
-const frutas3 = new Frutas(1000, 350, 45, 25, './img/banana.png')
-const frutas4 = new Frutas(1000, 350, 45, 25, './img/maca.png')
+const CHAO = 580
+
+function posicaoFruta() {
+    return CHAO - Math.random() * 150
+}
+
+const frutasLista = [
+    new Frutas(1200, posicaoFruta(), 45, 25, './img/morango.png'),
+    new Frutas(1400, posicaoFruta(), 45, 25, './img/abacaxi.png'),
+    new Frutas(1600, posicaoFruta(), 45, 25, './img/banana.png'),
+    new Frutas(1800, posicaoFruta(), 45, 25, './img/maca.png')
+]
+
+const galhosLista = [
+    new Galhos(1300, CHAO, 45, 25, './img/banana_podre.png'),
+    new Galhos(1600, CHAO, 45, 25, './img/maca_podre.png'),
+    new Galhos(1900, CHAO, 45, 25, './img/lixo.png')
+]
+
 const furao = new Furao(10, 520, 200, 120, './img/mov_furao.png')
 
 const fundoImg = new Image()
@@ -44,30 +59,19 @@ document.addEventListener("keyup", (e) => {
 })
 
 function pontuacao() {
-    if (furao.point(frutas)) {
-        furao.pontos += 5
-        frutas.recomeca()
-    }
-    if (furao.point(frutas2)) {
-        furao.pontos += 5
-        frutas.recomeca()
-    }
-    if (furao.point(frutas3)) {
-        furao.pontos += 5
-        frutas.recomeca()
-    }
-    if (furao.point(frutas4)) {
-        furao.pontos += 5
-        frutas.recomeca()
-    }
+    frutasLista.forEach(f => {
+        if (furao.point(f)) {
+            furao.pontos += 5
+            f.recomeca()
+        }
+    })
 }
 
-
 function desenha() {
-    frutas.des_fruta()
-    frutas2.des_fruta()
-    frutas3.des_fruta()
-    frutas4.des_fruta()
+
+    galhosLista.forEach(g => g.des_galhos())
+
+    frutasLista.forEach(f => f.des_fruta())
 
     furao.desenhar(des)
 }
@@ -75,29 +79,25 @@ function desenha() {
 function atualiza() {
     furao.atualizar(dx)
 
-    frutas.mov_fruta(dx)
-    frutas2.mov_fruta(dx)
-    frutas3.mov_fruta(dx)
-    frutas4.mov_fruta(dx)
+    galhosLista.forEach(g => g.mov_galho(dx))
+    frutasLista.forEach(f => f.mov_fruta(dx))
 
-    // colisão
-    if (furao.colid(frutas)) {
-        frutas.recomeca()
-    }
+    // colisão frutas
+    frutasLista.forEach(f => {
+        if (furao.colid(f)) {
+            f.recomeca()
+            furao.pontos += 5
+        }
+    })
 
-    if (furao.colid(frutas2)) {
-        frutas2.recomeca()
-    }
-
-    if (furao.colid(frutas3)) {
-        frutas3.recomeca()
-    }
-
-    if (furao.colid(frutas4)) {
-        frutas4.recomeca()
-    }
+    // colisão galhos
+    galhosLista.forEach(g => {
+        if (furao.colid(g)) {
+            console.log("bateu no galho!")
+            g.recomeca()
+        }
+    })
 }
-
 
 function main() {
 
