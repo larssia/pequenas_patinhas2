@@ -33,6 +33,11 @@ class Obj {
 }
 
 class Furao extends Obj {
+    constructor(x, y, w, h, a) {
+        super(x, y, w, h, a)
+        this.pontos = 0
+        this.maxPontos = 20
+    }
 
     desenhar(ctx) {
         let frameWidth = 120
@@ -130,8 +135,8 @@ class Frutas extends Obj {
     vel = 2
 
     recomeca() {
-        this.x = 1300
-        this.y = Math.floor(Math.random() * (638 - 400) + 400)
+        this.x = 1200 + Math.random() * 400
+        this.y = posicaoFruta()
     }
 
     mov_fruta(dx) {
@@ -147,8 +152,12 @@ class Galhos extends Obj {
     vel = 2
 
     recomeca() {
-        this.x = 1300
-        this.y = Math.floor(Math.random() * (638 - 400) + 400)
+        this.x = 1300 + Math.random() * 500
+        // evita nascer muito perto do jogador
+        while (Math.abs(this.x - furao.x) < 200) {
+            this.x += 200
+        }
+        this.y = CHAO - this.h
     }
 
     mov_galho(dx) {

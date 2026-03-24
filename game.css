@@ -1,19 +1,29 @@
-*{
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box; 
 }
 
-body{
+body {
     background-color: #C6A2D0;
-    color: rgb(0,128,255);
+    font-family: 'Courier New', Courier, monospace; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
 }
 
-canvas{
+canvas {
+    display: block;
     margin: auto;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
     background-image: url("./img/fundo.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+
+    border: 6px solid #2d1b33; 
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
