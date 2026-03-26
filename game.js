@@ -40,6 +40,9 @@ fundoImg3.src = "./img/fundo2.png"
 const fundoImg4 = new Image()
 fundoImg4.src = "./img/fundo3.png"
 
+const gameOverImg = new Image()
+gameOverImg.src = "./img/gameover.png"
+
 let dx = 0
 let fundoX = 0
 let fundoAtual = 0
@@ -48,6 +51,10 @@ let fase = 1
 let emTransicao = false
 let alphaFade = 0
 let proximaFase = 1
+
+let vidas = 3
+let galhosColetados = 0
+let gameOver = false
 
 //MOVIMENTA O FURAO KKK
 document.addEventListener("keydown", (e) => {
@@ -58,6 +65,8 @@ document.addEventListener("keydown", (e) => {
 
     if (e.key == "d" || e.key == "D" || e.key == "ArrowRight") {
         dx = 1
+    }if (gameOver && (e.key == "r" || e.key == "R")) {
+        reiniciarJogo()
     }
 
 })
@@ -102,6 +111,14 @@ function atualiza() {
     galhosLista.forEach(g => {
         if (furao.colid(g)) {
             g.recomeca()
+    
+            galhosColetados++
+    
+            if (galhosColetados >= 5) {
+                vidas--
+                galhosColetados = 0
+            }
+    
             furao.pontos = Math.max(0, furao.pontos - 2)
         }
     })
@@ -111,6 +128,24 @@ function atualiza() {
         emTransicao = true
         alphaFade = 0
         proximaFase = fase + 1
+    }
+
+    if (vidas <= 0) {
+        gameOver = true
+    }
+}
+
+//DESENHAR VIDAS
+function desenharVidas() {
+    let y = 60
+    let espacamento = 30
+
+    // começa da direita
+    let x = tela.width - (vidas * espacamento) - 20
+
+    for (let i = 0; i < vidas; i++) {
+        des.font = "24px Arial"
+        des.fillText("❤️", x + (i * espacamento), y)
     }
 }
 
@@ -182,57 +217,84 @@ function desenharFundo() {
         fundo1 = fundoImg
         fundo2 = fundoImg2
     } else {
-        fundo1 = fundoImg3
-        fundo2 = fundoImg4 // usa o mesmo pra repetir
-    }
+         fundo1 = fundoImg3
+         fundo2 = fundoImg4 
+     }
 
     // desenha infinito
     des.drawImage(fundo1, fundoX, 0, larguraFundo, 700)
     des.drawImage(fundo2, fundoX + larguraFundo, 0, larguraFundo, 700)
 }
 
-//TRANSICAO
-function atualizarTransicao() {
-    if (!emTransicao) return
-
-    alphaFade += 0.02
-
-    // tela branca
-    des.fillStyle = "rgba(255,255,255," + alphaFade + ")"
-    des.fillRect(0, 0, 1200, 700)
-
-    // quando termina o fade
-    if (alphaFade >= 1) {
-        fase = proximaFase
-        furao.pontos = 0
-
-        frutasLista.forEach(f => f.vel += 1)
-        galhosLista.forEach(g => g.vel += 1)
-
-        fundoX = 0
-        alphaFade = 0
-        emTransicao = false
-    }
-}
 
 //CONTROLA DESENHO DO JOGO
 function desenharJogo() {
     if (!emTransicao) {
         desenha()
         desenharBarra()
+        desenharVidas()
     }
+}
+
+function desenharGameOver() {
+    
+    des.drawImage(gameOverImg, 0, 0, tela.width, tela.height)
+
+    // camada escura por cima
+    des.fillStyle = "rgba(0, 0, 0, 0.5)"
+    des.fillRect(0, 0, tela.width, tela.height)
+
+    // título GAME OVER
+    des.fillStyle = "#fff"
+    des.font = "60px Arial"
+    des.textAlign = "center"
+    des.fillText("GAME OVER", tela.width / 2, 200)
+
+    // pontuação
+    des.font = "30px Arial"
+    des.fillText(
+        "Pontuação: " + furao.pontos,
+        tela.width / 2,
+        280
+    )
+
+    // instrução
+    des.font = "22px Arial"
+    des.fillText(
+        "Pressione R para reiniciar",
+        tela.width / 2,
+        330
+    )
+
+    // voltar alinhamento padrão
+    des.textAlign = "start"
+}
+
+function reiniciarJogo() {
+    vidas = 3
+    galhosColetados = 0
+    gameOver = false
+
+    furao.pontos = 0
+    furao.x = 10
+    furao.y = 520
+
+    frutasLista.forEach(f => f.recomeca())
+    galhosLista.forEach(g => g.recomeca())
 }
 
 function main() {
 
-    //LIMPA A TELA
     des.clearRect(0, 0, 1200, 700)
 
     desenharFundo()
-    desenharJogo()
-    atualiza()
-    atualizarTransicao()
 
+    if (!gameOver) {
+        desenharJogo()
+        atualiza()
+    } else {
+        desenharGameOver()
+    }
     requestAnimationFrame(main)
 }
 
