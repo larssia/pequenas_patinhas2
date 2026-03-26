@@ -40,6 +40,13 @@ fundoImg3.src = "./img/fundo2.png"
 const fundoImg4 = new Image()
 fundoImg4.src = "./img/fundo3.png"
 
+// NOVOS FUNDOS (FASE 3)
+const fundoImg5 = new Image()
+fundoImg5.src = "./img/fundo4.png"
+
+const fundoImg6 = new Image()
+fundoImg6.src = "./img/fundo5.png"
+
 const gameOverImg = new Image()
 gameOverImg.src = "./img/gameover.png"
 
@@ -65,7 +72,7 @@ document.addEventListener("keydown", (e) => {
 
     if (e.key == "d" || e.key == "D" || e.key == "ArrowRight") {
         dx = 1
-    }if (gameOver && (e.key == "r" || e.key == "R")) {
+    } if (gameOver && (e.key == "r" || e.key == "R")) {
         reiniciarJogo()
     }
 
@@ -111,23 +118,38 @@ function atualiza() {
     galhosLista.forEach(g => {
         if (furao.colid(g)) {
             g.recomeca()
-    
+
             galhosColetados++
-    
+
             if (galhosColetados >= 5) {
                 vidas--
                 galhosColetados = 0
             }
-    
+
             furao.pontos = Math.max(0, furao.pontos - 2)
         }
     })
 
     //mudar fase
+    //mudar fase
     if (furao.pontos >= furao.maxPontos && !emTransicao) {
         emTransicao = true
         alphaFade = 0
-        proximaFase = fase + 1
+        proximaFase = Math.min(3, fase + 1)
+    }
+
+    if (emTransicao) {
+        alphaFade += 0.05
+
+        if (alphaFade >= 1) {
+            fase = proximaFase
+            emTransicao = false
+            alphaFade = 0
+
+            furao.pontos = 0
+
+            furao.vel += 1.5
+        }
     }
 
     if (vidas <= 0) {
@@ -140,7 +162,6 @@ function desenharVidas() {
     let y = 60
     let espacamento = 30
 
-    // começa da direita
     let x = tela.width - (vidas * espacamento) - 20
 
     for (let i = 0; i < vidas; i++) {
@@ -158,28 +179,23 @@ function desenharBarra() {
 
     let progresso = furao.pontos / furao.maxPontos
 
-    // FUNDO (rosa clarinho)
     des.fillStyle = "#ffd6e0"
     desenharRetanguloArredondado(x, y, larguraMax, altura, 15)
     des.fill()
 
-    // BARRA (rosa mais forte)
     des.fillStyle = "#ff8fab"
     desenharRetanguloArredondado(x, y, larguraMax * progresso, altura, 15)
     des.fill()
 
-    // BRILHO (detalhe fofo)
     des.fillStyle = "rgba(255,255,255,0.4)"
     desenharRetanguloArredondado(x, y, larguraMax * progresso, altura / 2, 15)
     des.fill()
 
-    // BORDA
     des.strokeStyle = "#ff4d6d"
     des.lineWidth = 2
     desenharRetanguloArredondado(x, y, larguraMax, altura, 15)
     des.stroke()
 
-    // TEXTO
     des.fillStyle = "#ff4d6d"
     des.font = "18px Arial"
     des.fillText("💖 " + furao.pontos, x + larguraMax + 10, y + 18)
@@ -206,67 +222,79 @@ function desenharFundo() {
 
     fundoX -= dx * furao.vel
 
-    if (fundoX <= -larguraFundo) {
-        fundoX = 0
-    }
-
-    // ESCOLHE FUNDOS PELA FASE
-    let fundo1, fundo2
+    // LISTA DE FUNDOS POR FASE
+    let fundosFase
 
     if (fase === 1) {
-        fundo1 = fundoImg
-        fundo2 = fundoImg2
+        fundosFase = [fundoImg, fundoImg2]
+    } else if (fase === 2) {
+        fundosFase = [fundoImg3, fundoImg4]
     } else {
-         fundo1 = fundoImg3
-         fundo2 = fundoImg4 
-     }
+        fundosFase = [fundoImg5, fundoImg6]
+    }
 
-    // desenha infinito
-    des.drawImage(fundo1, fundoX, 0, larguraFundo, 700)
-    des.drawImage(fundo2, fundoX + larguraFundo, 0, larguraFundo, 700)
+    // índices dos fundos
+    let fundoA = fundosFase[0]
+    let fundoB = fundosFase[1]
+
+    // quando sair da tela, troca ordem
+    if (fundoX <= -larguraFundo) {
+        fundoX += larguraFundo
+
+        // troca os fundos (efeito alternado)
+        fundosFase.push(fundosFase.shift())
+    }
+
+    // desenha os dois fundos
+    des.globalAlpha = 1
+    des.drawImage(fundosFase[0], fundoX, 0, larguraFundo, 700)
+    des.drawImage(fundosFase[1], fundoX + larguraFundo, 0, larguraFundo, 700)
+
+    // FADE ENTRE FASES
+    if (emTransicao) {
+        let proximosFundos
+
+        if (proximaFase === 2) {
+            proximosFundos = [fundoImg3, fundoImg4]
+        } else if (proximaFase === 3) {
+            proximosFundos = [fundoImg5, fundoImg6]
+        }
+
+        if (proximosFundos) {
+            des.globalAlpha = alphaFade
+            des.drawImage(proximosFundos[0], fundoX, 0, larguraFundo, 700)
+            des.drawImage(proximosFundos[1], fundoX + larguraFundo, 0, larguraFundo, 700)
+        }
+    }
+
+    des.globalAlpha = 1
 }
-
 
 //CONTROLA DESENHO DO JOGO
 function desenharJogo() {
-    if (!emTransicao) {
-        desenha()
-        desenharBarra()
-        desenharVidas()
-    }
+    desenha()
+    desenharBarra()
+    desenharVidas()
 }
 
 function desenharGameOver() {
-    
+
     des.drawImage(gameOverImg, 0, 0, tela.width, tela.height)
 
-    // camada escura por cima
     des.fillStyle = "rgba(0, 0, 0, 0.5)"
     des.fillRect(0, 0, tela.width, tela.height)
 
-    // título GAME OVER
     des.fillStyle = "#fff"
     des.font = "60px Arial"
     des.textAlign = "center"
     des.fillText("GAME OVER", tela.width / 2, 200)
 
-    // pontuação
     des.font = "30px Arial"
-    des.fillText(
-        "Pontuação: " + furao.pontos,
-        tela.width / 2,
-        280
-    )
+    des.fillText("Pontuação: " + furao.pontos, tela.width / 2, 280)
 
-    // instrução
     des.font = "22px Arial"
-    des.fillText(
-        "Pressione R para reiniciar",
-        tela.width / 2,
-        330
-    )
+    des.fillText("Pressione R para reiniciar", tela.width / 2, 330)
 
-    // voltar alinhamento padrão
     des.textAlign = "start"
 }
 
@@ -274,6 +302,8 @@ function reiniciarJogo() {
     vidas = 3
     galhosColetados = 0
     gameOver = false
+    fase = 1
+    furao.vel = 5
 
     furao.pontos = 0
     furao.x = 10
@@ -295,6 +325,7 @@ function main() {
     } else {
         desenharGameOver()
     }
+
     requestAnimationFrame(main)
 }
 
