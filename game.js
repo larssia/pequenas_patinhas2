@@ -36,33 +36,6 @@ const galhosLista = [
 ]
 galhosLista.forEach(g => g.podeColidir = true)
 
-musica.loop = true
-musica.volume = 0.2
-
-somFruta.volume = 0.5
-somGalho.volume = 0.7
-somPulo.volume = 0.6
-somPassos.volume = 0.6
-
-let dx = 0
-let fundoX = 0
-let fundoAtual = 0
-
-let indexFundo = 0
-
-let fase = 1
-let emTransicao = false
-let alphaFade = 0
-let proximaFase = 1
-let pontosTotal = 0
-
-furao.maxPontos = pontosPorFase(fase)
-
-let vidas = 3
-let galhosColetados = 0
-let gameOver = false
-let venceu = false
-let velocidadeMundo = 0
 
 // ================== IMAGENS ==================
 const furao = new Furao(10, 520, 200, 120, './img/mov_furao.png')
@@ -97,6 +70,34 @@ const somPassos = new Audio('./sons/passos.mp3')
 somPassos.loop = true
 
 const musica = new Audio('./sons/fundo.mp3')
+
+musica.loop = true
+musica.volume = 0.2
+
+somFruta.volume = 0.5
+somGalho.volume = 0.7
+somPulo.volume = 0.6
+somPassos.volume = 0.6
+
+let dx = 0
+let fundoX = 0
+let fundoAtual = 0
+
+let indexFundo = 0
+
+let fase = 1
+let emTransicao = false
+let alphaFade = 0
+let proximaFase = 1
+let pontosTotal = 0
+
+furao.maxPontos = pontosPorFase(fase)
+
+let vidas = 3
+let galhosColetados = 0
+let gameOver = false
+let venceu = false
+let velocidadeMundo = 0
 
 
 document.addEventListener("keydown", () => {
