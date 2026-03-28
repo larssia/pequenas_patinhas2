@@ -1,8 +1,10 @@
+// ================== CONFIG ==================
 const tela = document.getElementById("des")
 const des = tela.getContext("2d")
 
 const CHAO = 580
 
+// ================== FUNÇÕES ==================
 function pontosPorFase(fase) {
     if (fase === 1) return 20
     if (fase === 2) return 40
@@ -19,6 +21,7 @@ function posicaoFruta() {
     return alturas[Math.floor(Math.random() * alturas.length)]
 }
 
+// ================== OBJETOS ==================
 const frutasLista = [
     new Frutas(1200, posicaoFruta(), 45, 25, './img/morango.png'),
     new Frutas(1400, posicaoFruta(), 45, 25, './img/abacaxi.png'),
@@ -31,9 +34,37 @@ const galhosLista = [
     new Galhos(1600, CHAO, 45, 25, './img/maca_podre.png'),
     new Galhos(1900, CHAO, 45, 25, './img/lixo.png')
 ]
-
 galhosLista.forEach(g => g.podeColidir = true)
 
+musica.loop = true
+musica.volume = 0.2
+
+somFruta.volume = 0.5
+somGalho.volume = 0.7
+somPulo.volume = 0.6
+somPassos.volume = 0.6
+
+let dx = 0
+let fundoX = 0
+let fundoAtual = 0
+
+let indexFundo = 0
+
+let fase = 1
+let emTransicao = false
+let alphaFade = 0
+let proximaFase = 1
+let pontosTotal = 0
+
+furao.maxPontos = pontosPorFase(fase)
+
+let vidas = 3
+let galhosColetados = 0
+let gameOver = false
+let venceu = false
+let velocidadeMundo = 0
+
+// ================== IMAGENS ==================
 const furao = new Furao(10, 520, 200, 120, './img/mov_furao.png')
 
 const fundoImg = new Image()
@@ -57,6 +88,7 @@ fundoImg6.src = "./img/fundo6.png"
 const gameOverImg = new Image()
 gameOverImg.src = "./img/gameover.png"
 
+// ================== SONS ==================
 const somFruta = new Audio('./sons/frutas.mp3')
 const somGalho = new Audio('./sons/galhos.mp3')
 const somPulo = new Audio('./sons/Pulo.mp3')
@@ -65,32 +97,7 @@ const somPassos = new Audio('./sons/passos.mp3')
 somPassos.loop = true
 
 const musica = new Audio('./sons/fundo.mp3')
-musica.loop = true
-musica.volume = 0.3
 
-somFruta.volume = 0.5
-somGalho.volume = 0.5
-somPulo.volume = 0.6
-somPassos.volume = 0.4
-
-let dx = 0
-let fundoX = 0
-let fundoAtual = 0
-
-let indexFundo = 0
-
-let fase = 1
-let emTransicao = false
-let alphaFade = 0
-let proximaFase = 1
-
-furao.maxPontos = pontosPorFase(fase)
-
-let vidas = 3
-let galhosColetados = 0
-let gameOver = false
-let venceu = false
-let velocidadeMundo = 0
 
 document.addEventListener("keydown", () => {
     musica.play()
@@ -159,41 +166,42 @@ function atualiza() {
     frutasLista.forEach(f => f.mov_fruta(velocidadeFase))
 
     frutasLista.forEach(f => {
+        let pontosGanhos = 3
         if (furao.colid(f)) {
             f.recomeca()
 
             somFruta.currentTime = 0
             somFruta.play()
 
-            furao.pontos = Math.min(furao.maxPontos, furao.pontos + 3)
+            furao.pontos = Math.min(furao.maxPontos, furao.pontos + pontosGanhos)
+            pontosTotal += pontosGanhos
         }
     })
 
     galhosLista.forEach(g => {
-    if (furao.colid(g) && g.podeColidir) {
+        if (furao.colid(g) && g.podeColidir) {
 
-        g.podeColidir = false
+            g.podeColidir = false
 
-        g.recomeca()
+            try {
+                somGalho.currentTime = 0
+                somGalho.play()
+            } catch (e) {
+                console.log("Erro no som:", e)
+            }
 
-        somGalho.currentTime = 0
-        somGalho.play()
+            let pontosPerdidos = 2
 
-        galhosColetados++
+            furao.pontos = Math.max(0, furao.pontos - pontosPerdidos)
+            pontosTotal = Math.max(0, pontosTotal - pontosPerdidos)
 
-        if (galhosColetados >= 5) {
-            vidas--
-            galhosColetados = 0
+            g.recomeca()
+
+            setTimeout(() => {
+                g.podeColidir = true
+            }, 300)
         }
-
-        furao.pontos = Math.max(0, furao.pontos - 2)
-
-        // libera colisão depois de um tempo
-        setTimeout(() => {
-            g.podeColidir = true
-        }, 300)
-    }
-})
+    })
 
     //mudar fase
     if (furao.pontos >= furao.maxPontos && !emTransicao) {
@@ -363,7 +371,7 @@ function desenharGameOver() {
     des.fillText("GAME OVER", tela.width / 2, 200)
 
     des.font = "30px Arial"
-    des.fillText("Pontuação: " + furao.pontos, tela.width / 2, 280)
+    des.fillText("Pontuação total: " + pontosTotal, tela.width / 2, 280)
 
     des.font = "22px Arial"
     des.fillText("Pressione R para reiniciar", tela.width / 2, 330)
@@ -395,6 +403,7 @@ function reiniciarJogo() {
     galhosColetados = 0
     gameOver = false
     venceu = false
+    pontosTotal = 0
 
     fase = 1
     furao.vel = 5
