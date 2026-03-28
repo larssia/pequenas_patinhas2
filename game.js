@@ -61,6 +61,9 @@ fundoImg6.src = "./img/fundo6.png"
 const gameOverImg = new Image()
 gameOverImg.src = "./img/gameover.png"
 
+const vitoriaImg = new Image()
+vitoriaImg.src = "./img/vitoria.png"
+
 // ================== SONS ==================
 const somFruta = new Audio('./sons/frutas.mp3')
 const somGalho = new Audio('./sons/galhos.mp3')
@@ -184,11 +187,20 @@ function atualiza() {
 
             g.podeColidir = false
 
+            // 🔊 SOM
             try {
                 somGalho.currentTime = 0
                 somGalho.play()
             } catch (e) {
                 console.log("Erro no som:", e)
+            }
+
+            // ⭐ CONTADOR DE GALHOS (ESSA PARTE FALTAVA)
+            galhosColetados++
+
+            if (galhosColetados >= 5) {
+                vidas--
+                galhosColetados = 0
             }
 
             let pontosPerdidos = 2
@@ -205,11 +217,12 @@ function atualiza() {
     })
 
     //mudar fase
-    if (furao.pontos >= furao.maxPontos && !emTransicao) {
+    if (furao.pontos >= furao.maxPontos && !emTransicao && !venceu) {
         emTransicao = true
         alphaFade = 0
         if (fase === 3) {
             venceu = true
+            gameOver = false
         } else {
             proximaFase = fase + 1
         }
@@ -426,9 +439,12 @@ function main() {
 
     desenharFundo()
 
+    if (!gameOver) {
+        atualiza()
+    }
+
     if (!gameOver && !venceu) {
         desenharJogo()
-        atualiza()
     } else if (gameOver) {
         desenharGameOver()
     } else if (venceu) {
