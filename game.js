@@ -107,7 +107,7 @@ document.addEventListener("keydown", () => {
     musica.play()
 }, { once: true })
 
-//MOVIMENTA O FURAO KKK
+//MOVIMENTA O FURAO
 document.addEventListener("keydown", (e) => {
 
     if (e.key == "w" || e.key == "W" || e.key == "ArrowUp") {
@@ -116,7 +116,13 @@ document.addEventListener("keydown", (e) => {
 
     if (e.key == "d" || e.key == "D" || e.key == "ArrowRight") {
         dx = 1
-    } if (gameOver && (e.key == "r" || e.key == "R")) {
+    }
+
+    if ((gameOver || venceu) && (e.key == "v" || e.key == "V")) {
+        window.location.href = "./index.html"
+    }
+
+    if (gameOver && (e.key == "r" || e.key == "R")) {
         reiniciarJogo()
     }
 
@@ -159,7 +165,7 @@ function atualiza() {
         somPassos.currentTime = 0
     }
 
-    //velocidade dos objetos por fase ⭐ MOVIDO PRA CIMA
+    //velocidade dos objetos por fase
     let velocidadeFase = 1
     velocidadeMundo = dx * furao.vel
 
@@ -187,7 +193,7 @@ function atualiza() {
 
             g.podeColidir = false
 
-            // 🔊 SOM
+            //  SOM
             try {
                 somGalho.currentTime = 0
                 somGalho.play()
@@ -195,7 +201,7 @@ function atualiza() {
                 console.log("Erro no som:", e)
             }
 
-            // ⭐ CONTADOR DE GALHOS (ESSA PARTE FALTAVA)
+            //  CONTADOR DE GALHOS 
             galhosColetados++
 
             if (galhosColetados >= 5) {
@@ -390,10 +396,15 @@ function desenharGameOver() {
     des.font = "22px Arial"
     des.fillText("Pressione R para reiniciar", tela.width / 2, 330)
 
+    des.font = "22px Arial"
+    des.fillText("Pressione V para voltar ao início", tela.width / 2, 370)
+
     des.textAlign = "start"
 }
 
 function desenharVitoria() {
+
+    des.drawImage(vitoriaImg, 0, 0, tela.width, tela.height)
 
     des.fillStyle = "rgba(0, 0, 0, 0.5)"
     des.fillRect(0, 0, tela.width, tela.height)
@@ -401,13 +412,16 @@ function desenharVitoria() {
     des.fillStyle = "#fff"
     des.font = "60px Arial"
     des.textAlign = "center"
-    des.fillText("VOCÊ GANHOU!", tela.width / 2, 200)
+    des.fillText("Você Ganhou!!", tela.width / 2, 200)
 
     des.font = "30px Arial"
-    des.fillText("Pontuação: " + furao.pontos, tela.width / 2, 280)
+    des.fillText("Pontuação total: " + pontosTotal, tela.width / 2, 280)
 
     des.font = "22px Arial"
-    des.fillText("Pressione R para jogar novamente", tela.width / 2, 330)
+    des.fillText("Pressione R para reiniciar", tela.width / 2, 330)
+
+    des.font = "22px Arial"
+    des.fillText("Pressione V para voltar ao início", tela.width / 2, 370)
 
     des.textAlign = "start"
 }

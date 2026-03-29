@@ -68,22 +68,22 @@ body{
     font-size: 20px;
 }
 
-.botoes{
-    position: absolute;
-    top: 800px; 
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 120px;
+.botoes{ 
+    position: fixed; 
+    top: 20px; 
+    right: 20px; 
+    z-index: 9999; 
 }
 
-.botao{
-    background-color: #efe5d6;
-    color: #e06aa3;
-    font-family: "Freckle Face", cursive;
-    font-size: 30px;
-    padding: 15px 60px;
-    border-radius: 1000px;
-    text-decoration: none;
-    display: inline-block;
+.botoes a{
+    background-color: #efe5d6; 
+    color: #e06aa3; 
+    font-family: "Freckle Face", cursive; 
+    font-size: 16px; 
+    padding: 8px 20px; 
+    border-radius: 1000px; 
+    text-decoration: none; 
+    display: inline-block; 
+    border: 1.5px solid #703350; 
+    cursor: pointer;
 }

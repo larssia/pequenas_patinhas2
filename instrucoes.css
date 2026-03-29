@@ -31,30 +31,27 @@ body{
     box-sizing: border-box;
 }
 
-.moldura {
-    width: 500px; 
-}
 
 .titulo {
     position: absolute;
     font-family: "Freckle Face", cursive;
     font-size: 55px; 
     color: #b46a91;
-    width: 500px; 
+    width: 700px; 
     text-align: center;
-    top: 130px; 
+    top: 70px; 
     left: 50%px;  
 }
 
 
 .conteudo-instrucoes {
-    width: 400px;
+    width: 550px;
     display: flex;
     flex-direction: column;
     gap: 15px;
     margin-top: 300px; 
     margin-left: 600px;    
-    margin-top: 375px; 
+    margin-top: 190px; 
     margin-left: 750px;    
     background-color: rgba(253, 242, 227, 0.9);
     padding: 20px;
@@ -105,22 +102,22 @@ body{
     text-align: center;
 }
 
-.botoes{
-    position: absolute;
-    top: 800px; 
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 120px;
+.botoes{ 
+    position: fixed; 
+    top: 20px; 
+    right: 20px; 
+    z-index: 9999; 
 }
 
-.botao{
-    background-color: #efe5d6;
-    color: #e06aa3;
-    font-family: "Freckle Face", cursive;
-    font-size: 30px;
-    padding: 15px 60px;
-    border-radius: 1000px;
-    text-decoration: none;
-    display: inline-block;
+.botoes a{
+    background-color: #efe5d6; 
+    color: #e06aa3; 
+    font-family: "Freckle Face", cursive; 
+    font-size: 16px; 
+    padding: 8px 20px; 
+    border-radius: 1000px; 
+    text-decoration: none; 
+    display: inline-block; 
+    border: 1.5px solid #703350; 
+    cursor: pointer;
 }
