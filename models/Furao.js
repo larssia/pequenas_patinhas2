@@ -140,7 +140,6 @@ class Galhos extends Obj {
 
         this.y = CHAO - this.h
     }
-
     mov_galho(velocidadeFase) {
         this.x -= this.vel * velocidadeFase + velocidadeMundo
 

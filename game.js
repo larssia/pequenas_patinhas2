@@ -85,6 +85,9 @@ somPassos.volume = 0.6
 let dx = 0
 let fundoX = 0
 let fundoAtual = 0
+let estado = "menu"
+let modoJogo = 1
+let personagemEscolhido = 1
 
 let indexFundo = 0
 
@@ -161,24 +164,85 @@ document.addEventListener("keyup", (e) => {
 
 })
 
-tela.addEventListener("click", (e) => {
+tela.addEventListener("click", (e) => {''
 
     let rect = tela.getBoundingClientRect()
     let mouseX = e.clientX - rect.left
     let mouseY = e.clientY - rect.top
 
-    let w = 50
-    let h = 50
-    let x = tela.width - w - 20
-    let y = tela.height - h - 20
+    // ================= MENU =================
+    if (estado === "menu") {
 
-    if (
-        mouseX >= x &&
-        mouseX <= x + w &&
-        mouseY >= y &&
-        mouseY <= y + h
-    ) {
-        pausado = !pausado
+        // botão JOGAR (ajusta posição se quiser)
+        if (
+            mouseX >= 300 && mouseX <= 500 &&
+            mouseY >= 300 && mouseY <= 380
+        ) {
+            estado = "selecao"
+        }
+    }
+
+    // ================= SELEÇÃO =================
+    else if (estado === "selecao") {
+
+        // 1 jogador
+        if (
+            mouseX >= 300 && mouseX <= 500 &&
+            mouseY >= 180 && mouseY <= 220
+        ) {
+            modoJogo = 1
+        }
+    
+        // 2 jogadores
+        if (
+            mouseX >= 300 && mouseX <= 500 &&
+            mouseY >= 240 && mouseY <= 280
+        ) {
+            modoJogo = 2
+        }
+    
+        // personagem 1
+        if (
+            mouseX >= 300 && mouseX <= 500 &&
+            mouseY >= 320 && mouseY <= 360
+        ) {
+            personagemEscolhido = 1
+        }
+    
+        // personagem 2
+        if (
+            mouseX >= 300 && mouseX <= 500 &&
+            mouseY >= 380 && mouseY <= 420
+        ) {
+            personagemEscolhido = 2
+        }
+    
+        // botão COMEÇAR
+        if (
+            mouseX >= 300 && mouseX <= 500 &&
+            mouseY >= 450 && mouseY <= 520
+        ) {
+            estado = "jogo"
+        }
+    }
+
+    // ================= JOGO =================
+    else if (estado === "jogo") {
+
+        // 👉 teu botão de pause (igual já tava)
+        let w = 50
+        let h = 50
+        let x = tela.width - w - 20
+        let y = tela.height - h - 20
+
+        if (
+            mouseX >= x &&
+            mouseX <= x + w &&
+            mouseY >= y &&
+            mouseY <= y + h
+        ) {
+            pausado = !pausado
+        }
     }
 
 })
@@ -424,6 +488,69 @@ function desenharJogo() {
     desenharBotaoPause()
 }
 
+function desenharMenu() {
+
+    des.fillStyle = "#111"
+    des.fillRect(0, 0, tela.width, tela.height)
+
+    des.fillStyle = "#fff"
+    des.font = "60px Arial"
+    des.textAlign = "center"
+
+    des.fillText("Furão Adventure", tela.width / 2, 200)
+
+    // botão jogar
+    des.fillStyle = "#ff8fab"
+    des.fillRect(300, 300, 200, 80)
+
+    des.fillStyle = "#000"
+    des.font = "30px Arial"
+    des.fillText("JOGAR", tela.width / 2, 350)
+
+    des.textAlign = "start"
+}
+
+function desenharSelecao() {
+
+    des.fillStyle = "#222"
+    des.fillRect(0, 0, tela.width, tela.height)
+
+    des.fillStyle = "#fff"
+    des.textAlign = "center"
+
+    des.font = "40px Arial"
+    des.fillText("Escolha o modo", tela.width / 2, 100)
+
+    des.font = "25px Arial"
+
+    // 1 jogador
+    des.fillStyle = modoJogo === 1 ? "#ff8fab" : "#fff"
+    des.fillText("1 Jogador", tela.width / 2, 200)
+
+    // 2 jogadores
+    des.fillStyle = modoJogo === 2 ? "#ff8fab" : "#fff"
+    des.fillText("2 Jogadores", tela.width / 2, 260)
+
+    // personagem
+    des.fillStyle = "#fff"
+    des.fillText("Escolha o personagem", tela.width / 2, 330)
+
+    des.fillStyle = personagemEscolhido === 1 ? "#ff8fab" : "#fff"
+    des.fillText("Furão 1", tela.width / 2, 380)
+
+    des.fillStyle = personagemEscolhido === 2 ? "#ff8fab" : "#fff"
+    des.fillText("Furão 2", tela.width / 2, 430)
+
+    // botão começar
+    des.fillStyle = "#ff8fab"
+    des.fillRect(300, 480, 200, 60)
+
+    des.fillStyle = "#000"
+    des.fillText("COMEÇAR", tela.width / 2, 520)
+
+    des.textAlign = "start"
+}
+
 function desenharPause() {
 
     // fundo escuro
@@ -549,22 +676,36 @@ function main() {
 
     des.clearRect(0, 0, 1200, 700)
 
-    desenharFundo()
-
-    if (!gameOver && !venceu && !pausado) {
-        atualiza()
+    // ================= MENU =================
+    if (estado === "menu") {
+        desenharMenu()
     }
 
-    if (!gameOver && !venceu) {
-        desenharJogo()
-    
-        if (pausado) {
-            desenharPause()
+    // ================= SELEÇÃO =================
+    else if (estado === "selecao") {
+        desenharSelecao()
+    }
+
+    // ================= JOGO =================
+    else if (estado === "jogo") {
+
+        desenharFundo()
+
+        if (!gameOver && !venceu && !pausado) {
+            atualiza()
         }
-    } else if (gameOver) {
-        desenharGameOver()
-    } else if (venceu) {
-        desenharVitoria()
+
+        if (!gameOver && !venceu) {
+            desenharJogo()
+
+            if (pausado) {
+                desenharPause()
+            }
+        } else if (gameOver) {
+            desenharGameOver()
+        } else if (venceu) {
+            desenharVitoria()
+        }
     }
 
     requestAnimationFrame(main)
