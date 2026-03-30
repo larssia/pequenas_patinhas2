@@ -41,7 +41,7 @@ body{
 
 .botoes{
     position: absolute;
-    top: 650px; 
+    top: 800px; 
     left: 50%;
     transform: translateX(-50%);
     display: flex;

@@ -153,6 +153,8 @@ function desenha() {
 
 //ATUALIZA
 function atualiza() {
+
+    if (gameOver || venceu) return
     furao.atualizar(dx)
 
     // SOM DE PASSOS
@@ -176,7 +178,7 @@ function atualiza() {
     frutasLista.forEach(f => f.mov_fruta(velocidadeFase))
 
     frutasLista.forEach(f => {
-        let pontosGanhos = 3
+        let pontosGanhos = 10
         if (furao.colid(f)) {
             f.recomeca()
 
@@ -427,7 +429,7 @@ function desenharVitoria() {
 }
 
 function reiniciarJogo() {
-    vidas = 3
+    vidas = 4
     galhosColetados = 0
     gameOver = false
     venceu = false
@@ -437,6 +439,8 @@ function reiniciarJogo() {
     furao.vel = 5
 
     furao.pontos = 0
+    furao.maxPontos = pontosPorFase(fase)
+
     furao.x = 10
     furao.y = 520
 
@@ -453,7 +457,7 @@ function main() {
 
     desenharFundo()
 
-    if (!gameOver) {
+    if (!gameOver && !venceu) {
         atualiza()
     }
 
