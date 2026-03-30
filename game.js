@@ -122,7 +122,7 @@ document.addEventListener("keydown", (e) => {
         window.location.href = "./index.html"
     }
 
-    if (gameOver && (e.key == "r" || e.key == "R")) {
+    if ((gameOver || venceu) && (e.key == "r" || e.key == "R")) {
         reiniciarJogo()
     }
 
