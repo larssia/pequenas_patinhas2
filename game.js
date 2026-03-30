@@ -96,7 +96,7 @@ let pontosTotal = 0
 
 furao.maxPontos = pontosPorFase(fase)
 
-let vidas = 3
+let vidas = 4
 let galhosColetados = 0
 let gameOver = false
 let venceu = false
@@ -231,6 +231,7 @@ function atualiza() {
         if (fase === 3) {
             venceu = true
             gameOver = false
+            emTransicao = false
         } else {
             proximaFase = fase + 1
         }
