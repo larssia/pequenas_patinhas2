@@ -100,6 +100,7 @@ let vidas = 4
 let galhosColetados = 0
 let gameOver = false
 let venceu = false
+let pausado = false
 let velocidadeMundo = 0
 
 
@@ -125,6 +126,9 @@ document.addEventListener("keydown", (e) => {
     if ((gameOver || venceu) && (e.key == "r" || e.key == "R")) {
         reiniciarJogo()
     }
+    if (e.key == "Escape") {
+        pausado = !pausado
+    }
 
 })
 
@@ -137,6 +141,44 @@ document.addEventListener("keyup", (e) => {
         e.key == "ArrowRight"
     ) {
         dx = 0
+    }
+    if (pausado) {
+
+        if (e.key == "1") {
+            pausado = false
+        }
+    
+        if (e.key == "2") {
+            pausado = false
+            reiniciarJogo()
+        }
+    
+        if (e.key == "3") {
+            window.location.href = "./index.html"
+        }
+    
+    }
+
+})
+
+tela.addEventListener("click", (e) => {
+
+    let rect = tela.getBoundingClientRect()
+    let mouseX = e.clientX - rect.left
+    let mouseY = e.clientY - rect.top
+
+    let w = 50
+    let h = 50
+    let x = tela.width - w - 20
+    let y = tela.height - h - 20
+
+    if (
+        mouseX >= x &&
+        mouseX <= x + w &&
+        mouseY >= y &&
+        mouseY <= y + h
+    ) {
+        pausado = !pausado
     }
 
 })
@@ -379,6 +421,57 @@ function desenharJogo() {
     desenha()
     desenharBarra()
     desenharVidas()
+    desenharBotaoPause()
+}
+
+function desenharPause() {
+
+    // fundo escuro
+    des.fillStyle = "rgba(0, 0, 0, 0.6)"
+    des.fillRect(0, 0, tela.width, tela.height)
+
+    des.fillStyle = "#fff"
+    des.textAlign = "center"
+
+    des.font = "50px Arial"
+    des.fillText("PAUSADO", tela.width / 2, 150)
+
+    // botões (texto)
+    des.font = "28px Arial"
+
+    des.fillText("1 - Voltar ao jogo", tela.width / 2, 250)
+    des.fillText("2 - Recomeçar", tela.width / 2, 300)
+    des.fillText("3 - Voltar ao início", tela.width / 2, 350)
+
+    des.textAlign = "start"
+}
+
+function desenharBotaoPause() {
+
+    let w = 50
+    let h = 50
+    let x = tela.width - w - 20
+    let y = tela.height - h - 20
+
+    // fundo
+    des.fillStyle = "rgba(0,0,0,0.5)"
+    des.fillRect(x, y, w, h)
+
+    des.fillStyle = "#fff"
+
+    if (!pausado) {
+        // 🔥 PAUSE (||)
+        des.fillRect(x + 14, y + 10, 6, 30)
+        des.fillRect(x + 30, y + 10, 6, 30)
+    } else {
+        // ▶ PLAY (triângulo)
+        des.beginPath()
+        des.moveTo(x + 15, y + 10)
+        des.lineTo(x + 15, y + 40)
+        des.lineTo(x + 38, y + 25)
+        des.closePath()
+        des.fill()
+    }
 }
 
 function desenharGameOver() {
@@ -458,12 +551,16 @@ function main() {
 
     desenharFundo()
 
-    if (!gameOver && !venceu) {
+    if (!gameOver && !venceu && !pausado) {
         atualiza()
     }
 
     if (!gameOver && !venceu) {
         desenharJogo()
+    
+        if (pausado) {
+            desenharPause()
+        }
     } else if (gameOver) {
         desenharGameOver()
     } else if (venceu) {
