@@ -178,7 +178,7 @@ function atualiza() {
     frutasLista.forEach(f => f.mov_fruta(velocidadeFase))
 
     frutasLista.forEach(f => {
-        let pontosGanhos = 10
+        let pontosGanhos = 3
         if (furao.colid(f)) {
             f.recomeca()
 
