@@ -89,6 +89,7 @@ let dx = 0
 let fundoX = 0
 let fundoAtual = 0
 let estado = "menu"
+let estado1 = "inicio"
 let modoJogo = 1
 let personagemEscolhido = 1
 
@@ -153,21 +154,21 @@ document.addEventListener("keyup", (e) => {
         if (e.key == "1") {
             pausado = false
         }
-    
+
         if (e.key == "2") {
             pausado = false
             reiniciarJogo()
         }
-    
+
         if (e.key == "3") {
             window.location.href = "./index.html"
         }
-    
+
     }
 
 })
 
-tela.addEventListener("click", (e) => {''
+tela.addEventListener("click", (e) => {
 
     let rect = tela.getBoundingClientRect()
     let mouseX = e.clientX - rect.left
@@ -176,12 +177,22 @@ tela.addEventListener("click", (e) => {''
     // ================= MENU =================
     if (estado === "menu") {
 
-        // botão JOGAR (ajusta posição se quiser)
+        // botão ESCOLHER
         if (
             mouseX >= 300 && mouseX <= 500 &&
             mouseY >= 300 && mouseY <= 380
         ) {
             estado = "selecao"
+            return
+        }
+
+        // botão VOLTAR
+        if (
+            mouseX >= 300 && mouseX <= 500 &&
+            mouseY >= 450 && mouseY <= 530
+        ) {
+            estado1 = "inicio" 
+            return
         }
     }
 
@@ -195,7 +206,7 @@ tela.addEventListener("click", (e) => {''
         ) {
             modoJogo = 1
         }
-    
+
         // 2 jogadores
         if (
             mouseX >= 300 && mouseX <= 500 &&
@@ -203,7 +214,7 @@ tela.addEventListener("click", (e) => {''
         ) {
             modoJogo = 2
         }
-    
+
         // personagem 1
         if (
             mouseX >= 300 && mouseX <= 500 &&
@@ -211,7 +222,7 @@ tela.addEventListener("click", (e) => {''
         ) {
             personagemEscolhido = 1
         }
-    
+
         // personagem 2
         if (
             mouseX >= 300 && mouseX <= 500 &&
@@ -219,7 +230,7 @@ tela.addEventListener("click", (e) => {''
         ) {
             personagemEscolhido = 2
         }
-    
+
         // botão COMEÇAR
         if (
             mouseX >= 300 && mouseX <= 500 &&
@@ -483,6 +494,7 @@ function desenharFundo() {
     des.globalAlpha = 1
 }
 
+
 //CONTROLA DESENHO DO JOGO
 function desenharJogo() {
     desenha()
@@ -496,7 +508,7 @@ function desenharMenu() {
     des.drawImage(menuImg, 0, 0, tela.width, tela.height)
 
     // título 
-    des.fillStyle = "#6d4c41" 
+    des.fillStyle = "#6d4c41"
     des.font = "bold 70px Arial"
     des.textAlign = "center"
     des.fillText("Pequenas patinhas", tela.width / 2, 180)
@@ -508,7 +520,7 @@ function desenharMenu() {
 
     // corpo do botão
     desenharRetanguloArredondado(300, 300, 200, 80, 20)
-    des.fillStyle = "#e29578" 
+    des.fillStyle = "#e29578"
     des.fill()
 
     // brilho superior
@@ -529,7 +541,7 @@ function desenharMenu() {
 
     // corpo do botão
     desenharRetanguloArredondado(300, 450, 200, 80, 20)
-    des.fillStyle = "#a68a64" 
+    des.fillStyle = "#a68a64"
     des.fill()
 
     des.fillStyle = "rgba(255,255,255,0.2)"
