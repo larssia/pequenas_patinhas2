@@ -64,6 +64,9 @@ gameOverImg.src = "./img/gameover.png"
 const vitoriaImg = new Image()
 vitoriaImg.src = "./img/vitoria.png"
 
+const menuImg = new Image()
+menuImg.src = "./img/menu.png"
+
 // ================== SONS ==================
 const somFruta = new Audio('./sons/frutas.mp3')
 const somGalho = new Audio('./sons/galhos.mp3')
@@ -489,64 +492,122 @@ function desenharJogo() {
 }
 
 function desenharMenu() {
+    // fundo
+    des.drawImage(menuImg, 0, 0, tela.width, tela.height)
 
-    des.fillStyle = "#111"
-    des.fillRect(0, 0, tela.width, tela.height)
-
-    des.fillStyle = "#fff"
-    des.font = "60px Arial"
+    // título 
+    des.fillStyle = "#6d4c41" 
+    des.font = "bold 70px Arial"
     des.textAlign = "center"
+    des.fillText("Pequenas patinhas", tela.width / 2, 180)
 
-    des.fillText("Furão Adventure", tela.width / 2, 200)
+    // --- BOTÃO ESCOLHER ---
+    desenharRetanguloArredondado(295, 305, 210, 90, 20)
+    des.fillStyle = "rgba(0,0,0,0.15)"
+    des.fill()
 
-    // botão jogar
-    des.fillStyle = "#ff8fab"
-    des.fillRect(300, 300, 200, 80)
+    // corpo do botão
+    desenharRetanguloArredondado(300, 300, 200, 80, 20)
+    des.fillStyle = "#e29578" 
+    des.fill()
 
-    des.fillStyle = "#000"
-    des.font = "30px Arial"
-    des.fillText("JOGAR", tela.width / 2, 350)
+    // brilho superior
+    des.fillStyle = "rgba(255,255,255,0.25)"
+    desenharRetanguloArredondado(300, 300, 200, 40, 20)
+    des.fill()
+
+    // texto
+    des.fillStyle = "#fff1e6"
+    des.font = "bold 30px Arial"
+    des.fillText("ESCOLHER", tela.width / 2, 350)
+
+    // --- BOTÃO VOLTAR ---
+    // sombra
+    desenharRetanguloArredondado(295, 455, 210, 90, 20)
+    des.fillStyle = "rgba(0,0,0,0.15)"
+    des.fill()
+
+    // corpo do botão
+    desenharRetanguloArredondado(300, 450, 200, 80, 20)
+    des.fillStyle = "#a68a64" 
+    des.fill()
+
+    des.fillStyle = "rgba(255,255,255,0.2)"
+    desenharRetanguloArredondado(300, 450, 200, 40, 20)
+    des.fill()
+
+    // texto
+    des.fillStyle = "#fff1e6"
+    des.font = "bold 30px Arial"
+    des.fillText("VOLTAR", tela.width / 2, 500)
 
     des.textAlign = "start"
 }
 
 function desenharSelecao() {
 
-    des.fillStyle = "#222"
+    // fundo
+    des.fillStyle = "#1a1a2e"
     des.fillRect(0, 0, tela.width, tela.height)
 
-    des.fillStyle = "#fff"
     des.textAlign = "center"
 
-    des.font = "40px Arial"
-    des.fillText("Escolha o modo", tela.width / 2, 100)
+    // título
+    des.fillStyle = "#ff8fab"
+    des.font = "50px Arial"
+    des.fillText("Configuração", tela.width / 2, 120)
 
-    des.font = "25px Arial"
+    des.font = "26px Arial"
+
+    // ===== MODO =====
+    des.fillStyle = "#fff"
+    des.fillText("Modo de jogo", tela.width / 2, 200)
 
     // 1 jogador
-    des.fillStyle = modoJogo === 1 ? "#ff8fab" : "#fff"
-    des.fillText("1 Jogador", tela.width / 2, 200)
+    desenharRetanguloArredondado(300, 220, 200, 40, 15)
+    des.fillStyle = modoJogo === 1 ? "#ff8fab" : "#333"
+    des.fill()
+    des.fillStyle = "#fff"
+    des.fillText("1 Jogador", tela.width / 2, 248)
 
     // 2 jogadores
-    des.fillStyle = modoJogo === 2 ? "#ff8fab" : "#fff"
-    des.fillText("2 Jogadores", tela.width / 2, 260)
-
-    // personagem
+    desenharRetanguloArredondado(300, 270, 200, 40, 15)
+    des.fillStyle = modoJogo === 2 ? "#ff8fab" : "#333"
+    des.fill()
     des.fillStyle = "#fff"
-    des.fillText("Escolha o personagem", tela.width / 2, 330)
+    des.fillText("2 Jogadores", tela.width / 2, 298)
 
-    des.fillStyle = personagemEscolhido === 1 ? "#ff8fab" : "#fff"
-    des.fillText("Furão 1", tela.width / 2, 380)
+    // ===== PERSONAGEM =====
+    des.fillStyle = "#fff"
+    des.fillText("Personagem", tela.width / 2, 360)
 
-    des.fillStyle = personagemEscolhido === 2 ? "#ff8fab" : "#fff"
-    des.fillText("Furão 2", tela.width / 2, 430)
+    // furão 1
+    desenharRetanguloArredondado(300, 380, 200, 40, 15)
+    des.fillStyle = personagemEscolhido === 1 ? "#ff8fab" : "#333"
+    des.fill()
+    des.fillStyle = "#fff"
+    des.fillText("Furão 1", tela.width / 2, 408)
 
-    // botão começar
-    des.fillStyle = "#ff8fab"
-    des.fillRect(300, 480, 200, 60)
+    // furão 2
+    desenharRetanguloArredondado(300, 430, 200, 40, 15)
+    des.fillStyle = personagemEscolhido === 2 ? "#ff8fab" : "#333"
+    des.fill()
+    des.fillStyle = "#fff"
+    des.fillText("Furão 2", tela.width / 2, 458)
 
-    des.fillStyle = "#000"
-    des.fillText("COMEÇAR", tela.width / 2, 520)
+    // ===== BOTÃO COMEÇAR =====
+    desenharRetanguloArredondado(300, 500, 200, 60, 20)
+    des.fillStyle = "#ff4d6d"
+    des.fill()
+
+    // brilho
+    des.fillStyle = "rgba(255,255,255,0.3)"
+    desenharRetanguloArredondado(300, 500, 200, 30, 20)
+    des.fill()
+
+    des.fillStyle = "#fff"
+    des.font = "28px Arial"
+    des.fillText("COMEÇAR", tela.width / 2, 538)
 
     des.textAlign = "start"
 }
