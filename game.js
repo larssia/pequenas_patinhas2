@@ -36,8 +36,8 @@ const galhosLista = [
 galhosLista.forEach(g => g.podeColidir = true)
 
 // ================== IMAGENS ==================
-const furao = new Furao(10, 520, 200, 120, './img/mov_furao.png')
-const furao2 = new Furao(10, 520, 200, 120, './img/mov_furao.png')
+const furao = new Furao(80, CHAO - 120, 200, 120, './img/mov_furao.png', CHAO - 120)
+const furao2 = new Furao(30, CHAO - 160, 180, 108, './img/mov_furao.png', CHAO - 160)
 
 const imgPooh = new Image()
 imgPooh.src = "./img/pooh.png"
@@ -758,9 +758,9 @@ function reiniciarJogo() {
     fase = 1
     furao.vel = 5; furao2.vel = 5
     furao.pontos = 0; furao.maxPontos = pontosPorFase(fase)
-    furao.x = 10; furao.y = 520
+    furao.x = 80; furao.y = CHAO - 120
     furao2.pontos = 0; furao2.maxPontos = pontosPorFase(fase)
-    furao2.x = 220; furao2.y = 520
+    furao2.x = 10; furao2.y = CHAO - 160; furao2.w = 180; furao2.h = 108; furao2.chaoY = CHAO - 160
     dx = 0; dx2 = 0
     frutasLista.forEach(f => f.recomeca())
     galhosLista.forEach(g => { g.recomeca(); g.podeColidir = true })
