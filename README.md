@@ -57,7 +57,7 @@ Os personagens são selecionados antes de iniciar a partida, na tela de personal
 ---
 
 ## 🗂️ Estrutura do Projeto
-
+```bash
 pequenas_patinhas2/
 │
 ├── 📄 index.html            # Tela inicial (menu principal)
@@ -89,7 +89,7 @@ pequenas_patinhas2/
     ├── 📊 caso_uso.png
     ├── 📊 diagrama_classes.png
     └── 📊 diagrama_sequencia.png
-
+```
 ---
 
 ## ⚙️ Funcionalidades Técnicas
