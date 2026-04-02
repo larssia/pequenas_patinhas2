@@ -60,35 +60,35 @@ Os personagens são selecionados antes de iniciar a partida, na tela de personal
 
 pequenas_patinhas2/
 │
-├── index.html
-├── game.html
-├── instrucoes.html
-├── sobre.html
+├── 📄 index.html            # Tela inicial (menu principal)
+├── 📄 game.html             # Tela do jogo (canvas)
+├── 📄 instrucoes.html       # Tela de instruções
+├── 📄 sobre.html            # Tela sobre a autora
 │
-├── style.css
-├── game.css
-├── instrucoes.css
-├── sobre.css
+├── 🎨 style.css             # Estilos da tela inicial
+├── 🎨 game.css              # Estilos da tela do jogo
+├── 🎨 instrucoes.css        # Estilos das instruções
+├── 🎨 sobre.css             # Estilos da tela sobre
 │
-├── game.js
+├── ⚙️ game.js               # Lógica principal do jogo
 │
-├── models/
-│   └── Furao.js
+├── 📁 models/
+│   └── 🧩 Furao.js          # Classe dos personagens e objetos
 │
-├── img/
-│   └── (sprites, fundos e imagens do jogo)
+├── 📁 img/
+│   └── 🖼️ (sprites, fundos e imagens do jogo)
 │
-├── sons/
-│   ├── frutas.mp3
-│   ├── fundo.mp3
-│   ├── galhos.mp3
-│   ├── passos.mp3
-│   └── pulo.mp3
+├── 📁 sons/
+│   ├── 🔊 frutas.mp3
+│   ├── 🔊 fundo.mp3
+│   ├── 🔊 galhos.mp3
+│   ├── 🔊 passos.mp3
+│   └── 🔊 pulo.mp3
 │
-└── Uml/
-    ├── caso_uso.png
-    ├── diagrama_classes.png
-    └── diagrama_sequencia.png
+└── 📁 Uml/
+    ├── 📊 caso_uso.png
+    ├── 📊 diagrama_classes.png
+    └── 📊 diagrama_sequencia.png
 
 ---
 
