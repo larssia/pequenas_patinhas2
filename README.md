@@ -59,34 +59,35 @@ Os personagens são selecionados antes de iniciar a partida, na tela de personal
 ## 🗂️ Estrutura do Projeto
 
 pequenas_patinhas2/
-│
-├── index.html            # Tela inicial (menu principal)
-├── game.html             # Tela do jogo (canvas)
-├── instrucoes.html       # Tela de instruções
-├── sobre.html            # Tela sobre a autora
-│
-├── style.css             # Estilos da tela inicial
-├── game.css              # Estilos da tela do jogo
-├── instrucoes.css        # Estilos da tela de instruções
-├── sobre.css             # Estilos da tela sobre
-│
-├── game.js               # Lógica principal do jogo
-│
-├── models/
-│   └── Furao.js          # Classe dos personagens/objetos do jogo
-│
-├── img/                  # Sprites, fundos e imagens do jogo
-├── sons/                 # Efeitos sonoros e música de fundo
-│   ├── frutas.mp3
-│   ├── fundo.mp3
-│   ├── galhos.mp3
-│   ├── passos.mp3
-│   └── pulo.mp3
-│
-└── Uml/                  # Diagramas UML do projeto
-    ├── caso_uso.png
-    ├── diagrama_classes.png
-    └── diagrama_sequencia.png
+|
++-- index.html            # Tela inicial (menu principal)
++-- game.html             # Tela do jogo (canvas)
++-- instrucoes.html       # Tela de instrucoes
++-- sobre.html            # Tela sobre a autora
+|
++-- style.css             # Estilos da tela inicial
++-- game.css              # Estilos da tela do jogo
++-- instrucoes.css        # Estilos da tela de instrucoes
++-- sobre.css             # Estilos da tela sobre
+|
++-- game.js               # Logica principal do jogo
+|
++-- models/
+|   \-- Furao.js          # Classe dos personagens e objetos do jogo
+|
++-- img/                  # Sprites, fundos e imagens do jogo
+|
++-- sons/                 # Efeitos sonoros e musica de fundo
+|   +-- frutas.mp3
+|   +-- fundo.mp3
+|   +-- galhos.mp3
+|   +-- passos.mp3
+|   \-- pulo.mp3
+|
+\-- Uml/                  # Diagramas UML do projeto
+    +-- caso_uso.png
+    +-- diagrama_classes.png
+    \-- diagrama_sequencia.png
 
 ---
 
@@ -101,6 +102,7 @@ pequenas_patinhas2/
 **Som com cloneNode()** — permite efeitos sonoros sobrepostos sem corte
 **Pause** via teclado (ESC) ou botão clicável na tela
 **Suporte a 1 ou 2 jogadores** com barras de progresso e vidas independentes
+
  
 
 ---
