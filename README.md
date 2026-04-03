@@ -1,5 +1,7 @@
 # 🐾 Pequenas Patinhas
 
+ <img width="432" height="577" alt="logo" src="https://github.com/user-attachments/assets/a7b72a80-ebd1-4225-b072-0456c592622f" />
+
  Jogo de plataforma 2D com tema fofo, desenvolvido com HTML5 Canvas, CSS e JavaScript puro.
 
  <img width="432" height="577" alt="logo" src="https://github.com/user-attachments/assets/a7b72a80-ebd1-4225-b072-0456c592622f" />

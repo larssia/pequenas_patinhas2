@@ -1,92 +1,264 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="./instrucoes.css">
-    <link rel="shortcut icon" href="./img/icons_furao.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Freckle+Face&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Freckle+Face&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <title>Pequenas Patinhas</title>
 </head>
-
 <body>
 
-    <header>
-    </header>
+<header>
+    <h1>🐾 Pequenas Patinhas</h1>
+    <p>Manual do Jogador</p>
+</header>
 
-    <div class="botoes">
-        <a href="./index.html">Voltar</a>
+<div class="botoes">
+    <a href="./index.html">← Voltar</a>
+</div>
+
+<main>
+
+    <!-- OBJETIVO -->
+    <h2 class="secao-titulo">🎯 Objetivo</h2>
+    <div class="card">
+        <ul class="objetivo-lista">
+            <li>
+                <span class="icon">🏃</span>
+                <span>Mova seu personagem pela fase coletando o máximo de <strong>frutas</strong> possível para encher a barra de pontos.</span>
+            </li>
+            <li>
+                <span class="icon">⚠️</span>
+                <span>Desvie de <strong>frutas podres e lixo</strong> para não perder pontos e vidas.</span>
+            </li>
+            <li>
+                <span class="icon">🚀</span>
+                <span>Complete as <strong>3 fases</strong> antes de perder todas as vidas para vencer!</span>
+            </li>
+        </ul>
     </div>
 
-    <main>
-
-        <div class="instrucoes">
-            <h1 class="titulo">Instruções</h1>
-        </div>
-
-        <div class="conteudo-instrucoes">
-
-            <!-- CONTROLES -->
-            <div class="item-instrucao">
-                <div class="controles">
+    <!-- CONTROLES -->
+    <h2 class="secao-titulo">🕹️ Controles</h2>
+    <div class="card">
+        <div class="controles-grid">
+            <div class="controle-item">
+                <div class="teclas">
                     <div class="tecla">W</div>
                     <div class="tecla">↑</div>
+                </div>
+                <div class="controle-desc">Pular
+                    <span>Dê um salto para desviar de obstáculos</span>
+                </div>
+            </div>
+            <div class="controle-item">
+                <div class="teclas">
                     <div class="tecla">D</div>
                     <div class="tecla">→</div>
                 </div>
-                <p><strong>Controles:</strong> Use <b>W</b> ou <b>↑</b> para pular e <b>D</b> ou <b>→</b> para andar
-                    para frente.</p>
+                <div class="controle-desc">Andar
+                    <span>Mova-se para a frente na fase</span>
+                </div>
             </div>
-
-            <!-- OBJETIVO -->
-            <div class="item-instrucao">
-                <span class="icone-grande">🎯</span>
-                <p><strong>Objetivo:</strong> Colete frutas para ganhar pontos e avançar pelas fases do jogo.</p>
+            <div class="controle-item">
+                <div class="teclas"><div class="tecla">R</div></div>
+                <div class="controle-desc">Reiniciar
+                    <span>Após game over ou vitória</span>
+                </div>
             </div>
-
-            <!-- FRUTAS -->
-            <div class="item-instrucao">
-                <span class="icone-grande">🍓</span>
-                <p><strong>Frutas:</strong> Cada fruta coletada vale <b>+3 pontos</b>. Junte o suficiente para passar de
-                    fase!</p>
+            <div class="controle-item">
+                <div class="teclas"><div class="tecla">Esc</div></div>
+                <div class="controle-desc">Pausar
+                    <span>Pausa e retoma o jogo</span>
+                </div>
             </div>
-
-            <!-- OBSTÁCULOS -->
-            <div class="item-instrucao">
-                <span class="icone-grande">⚠️</span>
-                <p><strong>Obstáculos:</strong> Evite frutas podres e lixo! Cada colisão tira <b>-2 pontos</b> e acumula
-                    penalidade.</p>
-            </div>
-
-            <!-- VIDAS -->
-            <div class="item-instrucao">
-                <span class="icone-grande">❤️</span>
-                <p><strong>Vidas:</strong> Você começa com 3 vidas. A cada <b>5 colisões</b>, perde 1 vida.</p>
-            </div>
-
-            <!-- FASES -->
-            <div class="item-instrucao">
-                <span class="icone-grande">🚀</span>
-                <p><strong>Fases:</strong> O jogo tem 3 fases. A cada fase a velocidade aumenta. Complete todas para
-                    vencer!</p>
-            </div>
-
-            <!-- GAME OVER -->
-            <div class="item-instrucao">
-                <span class="icone-grande">💀</span>
-                <p><strong>Game Over:</strong> Se perder todas as vidas, o jogo acaba.</p>
-            </div>
-
-            <!-- REINICIAR -->
-            <div class="item-instrucao">
-                <span class="icone-grande">🔁</span>
-                <p><strong>Reiniciar:</strong> Pressione <b>R</b> para jogar novamente após perder ou vencer.</p>
-            </div>
-
         </div>
+    </div>
 
-    </main>
+    <!-- PERSONAGENS -->
+    <h2 class="secao-titulo">🐾 Personagens</h2>
+    <div class="cards-lista">
+        <div class="item-card">
+            <div class="emoji-box">
+                <img src="./img/furao_lado_oposto.png" alt="Furão">
+            </div>
+            <div class="item-info">
+                <strong>Furão</strong>
+                <span class="tag tag-rosa">Personagem padrão</span>
+                <p>O protagonista original — ágil e determinado, pronto pra coletar todas as frutas da floresta.</p>
+            </div>
+        </div>
+        <div class="separador">✦</div>
+        <div class="item-card roxo">
+            <div class="emoji-box">
+                <img src="./img/pooh.png" alt="Poohret">
+            </div>
+            <div class="item-info">
+                <strong>Poohret</strong>
+                <span class="tag tag-roxo">Desbloqueável</span>
+                <p>Inspirado no famoso ursinho, Poohret adora mel… e frutas! Uma escolha fofa e confiável.</p>
+            </div>
+        </div>
+        <div class="separador">✦</div>
+        <div class="item-card">
+            <div class="emoji-box">
+                <img src="./img/tigrao.png" alt="Tigret">
+            </div>
+            <div class="item-info">
+                <strong>Tigret</strong>
+                <span class="tag tag-rosa">Desbloqueável</span>
+                <p>Elástico e saltitante como seu xará famoso — perfeito pra quem adora pular alto.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FRUTAS -->
+    <h2 class="secao-titulo">🍓 Frutas Coletáveis</h2>
+    <div class="cards-lista">
+        <div class="item-card">
+            <div class="emoji-box">
+                <img src="./img/morango.png" alt="Morango">
+            </div>
+            <div class="item-info">
+                <strong>Morango</strong>
+                <span class="tag tag-rosa">+3 pontos</span>
+                <p>Pequeno e rápido de coletar — aparece com frequência nas três fases.</p>
+            </div>
+        </div>
+        <div class="separador">✦</div>
+        <div class="item-card">
+            <div class="emoji-box">
+                <img src="./img/abacaxi.png" alt="Abacaxi">
+            </div>
+            <div class="item-info">
+                <strong>Abacaxi</strong>
+                <span class="tag tag-rosa">+3 pontos</span>
+                <p>Espinhoso por fora, delicioso por dentro. Maior que o morango — mais fácil de pegar!</p>
+            </div>
+        </div>
+        <div class="separador">✦</div>
+        <div class="item-card">
+            <div class="emoji-box">
+                <img src="./img/banana.png" alt="Banana">
+            </div>
+            <div class="item-info">
+                <strong>Banana</strong>
+                <span class="tag tag-rosa">+3 pontos</span>
+                <p>Clássica e nutritiva. Aparece em alturas variadas — fique de olho no ar!</p>
+            </div>
+        </div>
+        <div class="separador">✦</div>
+        <div class="item-card">
+            <div class="emoji-box">
+                <img src="./img/maca.png" alt="">
+            </div>
+            <div class="item-info">
+                <strong>Maçã</strong>
+                <span class="tag tag-rosa">+3 pontos</span>
+                <p>Vermelha e tentadora. Às vezes aparece bem baixinho — nem sempre precisa pular.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- OBSTACULOS -->
+    <h2 class="secao-titulo">⚠️ Obstáculos</h2>
+    <div class="cards-lista">
+        <div class="item-card perigo">
+            <div class="emoji-box">
+                <img src="./img/banana_podre.png" alt="Banana Podre">
+            </div>
+            <div class="item-info">
+                <strong>Banana Podre</strong>
+                <span class="tag tag-vermelho">-2 pontos</span>
+                <p>Parece inofensiva, mas está estragada! Colisão acumula penalidade e escorrega a pontuação.</p>
+            </div>
+        </div>
+        <div class="separador">✦</div>
+        <div class="item-card perigo">
+            <div class="emoji-box">
+                <img src="./img/maca_podre.png" alt="Maça Podre">
+            </div>
+            <div class="item-info">
+                <strong>Maçã Podre</strong>
+                <span class="tag tag-vermelho">−2 pontos</span>
+                <p>Fermentada e perigosa — desvie ou perderá pontos preciosos para a próxima fase.</p>
+            </div>
+        </div>
+        <div class="separador">✦</div>
+        <div class="item-card perigo">
+            <div class="emoji-box">
+                <img src="./img/lixo.png" alt="">
+            </div>
+            <div class="item-info">
+                <strong>Lixo</strong>
+                <span class="tag tag-vermelho">−2 pontos</span>
+                <p>Quem jogou isso aqui?! Ocupa o chão e é difícil de desviar sem pular.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FASES -->
+    <h2 class="secao-titulo">🚀 Fases</h2>
+    <div class="fases-grid">
+        <div class="fase-card">
+            <span class="fase-num">01</span>
+            <strong>Fase Inicial</strong>
+            <p>Pontos necessários: <b>20</b>. Boa para aprender os controles e pegar o ritmo.</p>
+            <span class="velocidade">🐢 Normal</span>
+        </div>
+        <div class="fase-card">
+            <span class="fase-num">02</span>
+            <strong>Fase Intermediária</strong>
+            <p>Pontos necessários: <b>40</b>. Os obstáculos chegam mais rápido — fique alerta!</p>
+            <span class="velocidade">⚡ Média</span>
+        </div>
+        <div class="fase-card">
+            <span class="fase-num">03</span>
+            <strong>Fase Final</strong>
+            <p>Pontos necessários: <b>60</b>. Tudo voa! Reflexos rápidos são a chave da vitória.</p>
+            <span class="velocidade">🔥 Alta</span>
+        </div>
+    </div>
+
+    <!-- VIDAS E DICAS -->
+    <h2 class="secao-titulo">❤️ Vidas & Dicas</h2>
+    <div class="dica-grid">
+        <div class="dica-card">
+            <span class="dica-icon">❤️</span>
+            <div>
+                <strong>Sistema de Vidas</strong>
+                <p>Você começa com <b>4 vidas</b>. A cada <b>5 colisões</b> com obstáculos, perde 1 vida. Sem vidas = Game Over!</p>
+            </div>
+        </div>
+        <div class="dica-card">
+            <span class="dica-icon">💀</span>
+            <div>
+                <strong>Game Over</strong>
+                <p>Perdeu tudo? Pressione <b>R</b> para recomeçar ou <b>V</b> para voltar ao menu inicial.</p>
+            </div>
+        </div>
+        <div class="dica-card">
+            <span class="dica-icon">👥</span>
+            <div>
+                <strong>2 Jogadores</strong>
+                <p>No modo 2P, P2 usa <b>↑</b> pra pular e <b>→</b> pra andar. Cada um tem suas próprias vidas e barra.</p>
+            </div>
+        </div>
+        <div class="dica-card">
+            <span class="dica-icon">💡</span>
+            <div>
+                <strong>Dica de Ouro</strong>
+                <p>Pule cedo! Os obstáculos ficam cada vez mais rápidos nas fases finais. Antecipe o salto.</p>
+            </div>
+        </div>
+    </div>
+
+</main>
+<footer>
+    <a href="https://github.com/larssia?tab=repositories">Larissa Bernardi &trade; &copy;</a>
+</footer>
+
 </body>
-
 </html>

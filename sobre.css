@@ -118,6 +118,22 @@ main {
     flex-shrink: 0;
 }
 
+.card-conteudo {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* FOTO */
+.foto-perfil {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 3px solid #f0abdc;
+    box-shadow: 4px 4px 0 #f9d5ec;
+}
+
 .card h2 {
     font-family: 'Freckle Face', cursive;
     font-size: 1.4rem;
