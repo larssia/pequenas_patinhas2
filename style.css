@@ -4,7 +4,7 @@
 }
 
 body{
-    background-image: url("./img/inicio.png");
+    background-image: url("./img/inicio2.png");
     background-size: 100% 100%;
     background-size: cover;
     background-position: center;
@@ -25,9 +25,6 @@ body{
     padding-top: 10px;
 }
 
-.moldura{
-    width: 800px;
-}
 
 /* texto dentro da moldura */
 .titulo{
@@ -49,8 +46,8 @@ body{
 }
 
 .botoes a{
-    background-color: #efe5d6;
-    color: #e06aa3;
+    background-color: #b08968;
+    color: #5d4037;
     font-family: "Freckle Face", cursive;
     font-size: 30px;
 
@@ -70,8 +67,8 @@ body{
     align-items: center;
     gap: 120px; 
 
-    background-color: #efe5d6;
-    color: #e06aa3;
+    background-color: #b08968;
+    color: #5d4037;
     border: 1.5px solid #703350;
     font-family: "Freckle Face", cursive;
     font-size: 20px;
