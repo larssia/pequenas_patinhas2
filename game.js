@@ -20,20 +20,39 @@ function posicaoFruta() {
     return alturas[Math.floor(Math.random() * alturas.length)]
 }
 
-// ================== OBJETOS ==================
-const frutasLista = [
-    new Frutas(1200, posicaoFruta(), 45, 25, './img/morango.png'),
-    new Frutas(1400, posicaoFruta(), 45, 25, './img/abacaxi.png'),
-    new Frutas(1500, posicaoFruta(), 45, 25, './img/banana.png'),
-    new Frutas(1800, posicaoFruta(), 45, 25, './img/maca.png')
-]
+// ================= OBJETOS =================
 
-const galhosLista = [
-    new Galhos(1300, CHAO, 45, 25, './img/banana_podre.png'),
-    new Galhos(1600, CHAO, 45, 25, './img/maca_podre.png'),
-    new Galhos(1900, CHAO, 45, 25, './img/lixo.png')
-]
-galhosLista.forEach(g => g.podeColidir = true)
+// MUITAS FRUTAS
+const frutasLista = []
+for (let i = 0; i < 12; i++) {
+    frutasLista.push(
+        new Frutas(
+            1200 + i * 180,
+            CHAO - 40,
+            50,
+            30,
+            './img/morango.png'
+        )
+    )
+}
+
+// MUITOS GALHOS
+const galhosLista = []
+for (let i = 0; i < 10; i++) {
+    galhosLista.push(
+        new Galhos(
+            1200 + i * 220,
+            CHAO,
+            60,
+            40,
+            './img/galho.png'
+        )
+    )
+}
+
+// TRONCOS GRANDES NO CHÃO
+galhosLista.push(new Galhos(2000, CHAO, 120, 90, './img/tronco.png', true))
+galhosLista.push(new Galhos(2600, CHAO, 120, 90, './img/tronco.png', true))
 
 // ================== IMAGENS ==================
 const furao = new Furao(80, CHAO - 120, 200, 120, './img/mov_furao.png', CHAO - 120)
@@ -113,17 +132,13 @@ let velocidadeMundo = 0
 document.addEventListener("keydown", () => { musica.play() }, { once: true })
 
 document.addEventListener("keydown", (e) => {
-    // Jogador 1 - pulo
     if (e.key == "w" || e.key == "W") furao.pular()
-    // Jogador 2 - pulo (seta cima) ou P1 no modo 1P
     if (e.key == "ArrowUp") {
         if (modoJogo === 2) furao2.pular()
         else furao.pular()
     }
-    // Mover P1
     if (e.key == "d" || e.key == "D") dx = 1
     if (e.key == "ArrowRight" && modoJogo === 1) dx = 1
-    // Mover P2
     if (e.key == "ArrowRight" && modoJogo === 2) dx2 = 1
 
     if ((gameOver || venceu) && (e.key == "v" || e.key == "V")) window.location.href = "./index.html"
@@ -149,7 +164,6 @@ tela.addEventListener("click", (e) => {
     let mouseX = e.clientX - rect.left
     let mouseY = e.clientY - rect.top
 
-    // ======= MENU =======
     if (estado === "menu") {
         let largura = 220, altura = 80
         let x1 = tela.width / 2 - 260, y1 = 380
@@ -163,12 +177,10 @@ tela.addEventListener("click", (e) => {
         }
     }
 
-    // ======= SELEÇÃO =======
     if (estado === "selecao") {
         let largura = 200, altura = 45
         let xCentro = tela.width / 2 - largura / 2
 
-        // Botões modo
         let y1Modo = 185, y2Modo = 240
         if (mouseX >= xCentro && mouseX <= xCentro + largura && mouseY >= y1Modo && mouseY <= y1Modo + altura) {
             modoJogo = 1; selecionandoJogador = 0; return
@@ -177,7 +189,6 @@ tela.addEventListener("click", (e) => {
             modoJogo = 2; selecionandoJogador = 1; return
         }
 
-        // Personagens
         let ys = [340, 410, 480]
 
         if (modoJogo === 1) {
@@ -188,7 +199,6 @@ tela.addEventListener("click", (e) => {
                 }
             })
         } else {
-            // P1 lado esquerdo
             let xEsq = tela.width / 2 - largura - 60
             let xDir = tela.width / 2 + 60
 
@@ -208,7 +218,6 @@ tela.addEventListener("click", (e) => {
             })
         }
 
-        // Botão Jogar
         let xJogar = tela.width / 2 - 110, yJogar = tela.height - 90
         if (mouseX >= xJogar && mouseX <= xJogar + 220 && mouseY >= yJogar && mouseY <= yJogar + 60) {
             aplicarPersonagem(furao, personagemEscolhido)
@@ -217,7 +226,6 @@ tela.addEventListener("click", (e) => {
         }
     }
 
-    // ======= PAUSE BUTTON =======
     if (estado === "jogo") {
         let w = 50, h = 50
         let bx = tela.width - w - 20, by = tela.height - h - 20
@@ -237,7 +245,9 @@ function aplicarPersonagem(jogador, personagem) {
 function desenha() {
     galhosLista.forEach(g => g.des_galhos())
     frutasLista.forEach(f => f.des_fruta())
+
     furao.desenhar(des)
+    if (modoJogo === 2) furao2.desenhar(des)
 
     if (modoJogo === 2) {
         furao2.desenhar(des)
@@ -277,7 +287,6 @@ function atualiza() {
     galhosLista.forEach(g => g.mov_galho(velocidadeFase))
     frutasLista.forEach(f => f.mov_fruta(velocidadeFase))
 
-    // Colisões frutas
     frutasLista.forEach(f => {
         let pg = 3
         if (furao.colid(f)) {
@@ -294,27 +303,19 @@ function atualiza() {
         }
     })
 
-    // Colisões galhos
     galhosLista.forEach(g => {
         if (furao.colid(g) && g.podeColidir) {
             g.podeColidir = false
-            try { somGalho.currentTime = 0; somGalho.play() } catch(e) {}
+
             galhosColetados++
-            if (galhosColetados >= 5) { vidas--; galhosColetados = 0 }
-            furao.pontos = Math.max(0, furao.pontos - 2)
-            pontosTotal = Math.max(0, pontosTotal - 2)
+            if (galhosColetados >= 5) {
+                vidas--
+                galhosColetados = 0
+            }
+
             g.recomeca()
-            setTimeout(() => { g.podeColidir = true }, 300)
-        }
-        if (modoJogo === 2 && furao2.colid(g) && g.podeColidir) {
-            g.podeColidir = false
-            try { somGalho.currentTime = 0; somGalho.play() } catch(e) {}
-            galhosColetados2++
-            if (galhosColetados2 >= 5) { vidas2--; galhosColetados2 = 0 }
-            furao2.pontos = Math.max(0, furao2.pontos - 2)
-            pontosTotal2 = Math.max(0, pontosTotal2 - 2)
-            g.recomeca()
-            setTimeout(() => { g.podeColidir = true }, 300)
+
+            setTimeout(() => g.podeColidir = true, 300)
         }
     })
 
@@ -363,7 +364,6 @@ function desenharVidas() {
             des.fillText("❤️", x + (i * espacamento), y)
         }
     } else {
-        // P1
         let y1 = 60
         let x1 = tela.width - (vidas * espacamento) - 50
         des.fillStyle = "#ff4d6d"
@@ -373,7 +373,6 @@ function desenharVidas() {
             des.font = "20px Arial"
             des.fillText("❤️", x1 + (i * espacamento), y1)
         }
-        // P2
         let y2 = 90
         let x2 = tela.width - (vidas2 * espacamento) - 50
         des.fillStyle = "#4d88ff"
@@ -392,7 +391,6 @@ function desenharBarra() {
     let x = 20
     let y = 20
 
-    // Barra P1
     let progresso = furao.pontos / furao.maxPontos
 
     des.fillStyle = "#ffd6e0"
@@ -421,7 +419,6 @@ function desenharBarra() {
     des.font = "16px Arial"
     des.fillText("💖 " + furao.pontos, x + larguraMax + 8, y + 16)
 
-    // Barra P2
     if (modoJogo === 2) {
         let y2 = 50
         let progresso2 = furao2.pontos / furao2.maxPontos
@@ -524,7 +521,6 @@ function desenharMenu() {
     let x1 = tela.width / 2 - 260, y1 = 380
     let x2 = tela.width / 2 + 40, y2 = 380
 
-    // Botão Voltar
     desenharRetanguloArredondado(x1 + 5, y1 + 5, largura, altura, 25)
     des.fillStyle = "rgba(0,0,0,0.2)"; des.fill()
     desenharRetanguloArredondado(x1, y1, largura, altura, 25)
@@ -534,7 +530,6 @@ function desenharMenu() {
     des.fillStyle = "#fff"; des.font = "bold 26px Arial"
     des.fillText("Voltar", x1 + largura / 2, y1 + 48)
 
-    // Botão Personalizar
     desenharRetanguloArredondado(x2 + 5, y2 + 5, largura, altura, 25)
     des.fillStyle = "rgba(0,0,0,0.2)"; des.fill()
     desenharRetanguloArredondado(x2, y2, largura, altura, 25)
@@ -574,7 +569,6 @@ function desenharSelecao() {
     des.fillStyle = "#fff"
     des.fillText("2 Jogadores", tela.width / 2, y2Modo + 27)
 
-    // Personagens
     let ys = [310, 385, 460]
     let nomes = ["Poohret", "Tigret", "Musti"]
     let imgs = [imgPooh, imgTigre, imgMusti]
@@ -594,7 +588,6 @@ function desenharSelecao() {
             des.drawImage(imgs[i], xImg, y - 3, 50, 50)
         })
     } else {
-        // 2 colunas
         let xEsq = tela.width / 2 - largura - 55
         let xDir = tela.width / 2 + 55
         let xImgEsq = xEsq + largura + 8
@@ -606,7 +599,6 @@ function desenharSelecao() {
         des.fillText("Jogador 2 ▶" + (selecionandoJogador === 2 ? " (escolha!)" : ""), tela.width / 2 + 130, 295)
 
         ys.forEach((y, i) => {
-            // P1
             desenharRetanguloArredondado(xEsq, y, largura, altura, 20)
             des.fillStyle = personagemEscolhido === (i + 1) ? "#ff8fab" : "rgba(0,0,0,0.15)"; des.fill()
             if (selecionandoJogador === 1) {
@@ -617,7 +609,6 @@ function desenharSelecao() {
             des.fillText(nomes[i], xEsq + largura / 2, y + 27)
             des.drawImage(imgs[i], xImgEsq, y - 3, 48, 48)
 
-            // P2
             desenharRetanguloArredondado(xDir, y, largura, altura, 20)
             des.fillStyle = personagemEscolhido2 === (i + 1) ? "#6aa3ff" : "rgba(0,0,0,0.15)"; des.fill()
             if (selecionandoJogador === 2) {
@@ -638,7 +629,6 @@ function desenharSelecao() {
         }
     }
 
-    // Botão Jogar
     let xJogar = tela.width / 2 - 110, yJogar = tela.height - 90
 
     desenharRetanguloArredondado(xJogar + 4, yJogar + 4, 220, 60, 25)

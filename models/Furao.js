@@ -7,15 +7,11 @@ class Obj {
         this.a = a
 
         this.vel = 2
-        this.gravidade = 0.3
+        this.gravidade = 0.5
         this.impulso = -12
         this.velY = 0
         this.noChao = false
         this.chaoY = chaoY
-
-        this.frame = 0
-        this.frameTimer = 0
-        this.frameDelay = 6
 
         this.img = new Image()
         this.img.src = this.a
@@ -24,11 +20,13 @@ class Obj {
     des_fruta() {
         des.drawImage(this.img, this.x, this.y, this.w, this.h)
     }
+
     des_galhos() {
         des.drawImage(this.img, this.x, this.y, this.w, this.h)
     }
 }
 
+// ================= FURÃO =================
 class Furao extends Obj {
     constructor(x, y, w, h, a, chaoY) {
         super(x, y, w, h, a, chaoY)
@@ -37,35 +35,13 @@ class Furao extends Obj {
     }
 
     desenhar(ctx) {
-        let frameWidth = 121
-        let frameHeight = 70
-        let sx = this.frame * frameWidth
-        let sy = 0
-
-        if (!this.noChao) {
-            sy = 72
-        }
-
-        ctx.drawImage(
-            this.img,
-            sx,
-            sy,
-            frameWidth,
-            frameHeight,
-            this.x,
-            this.y,
-            this.w,
-            this.h
-        )
+        ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
     }
 
     pular() {
         if (this.noChao) {
             this.velY = this.impulso
             this.noChao = false
-            this.frame = 0
-
-            somPulo.cloneNode().play()
         }
     }
 
@@ -86,66 +62,38 @@ class Furao extends Obj {
             this.y = this.chaoY
             this.velY = 0
             this.noChao = true
-        } else {
-            this.noChao = false
-        }
-
-        this.frameTimer++
-
-        if (this.frameTimer >= this.frameDelay) {
-            this.frameTimer = 0
-
-            if (!this.noChao) {
-                this.frame++
-                if (this.frame > 5) this.frame = 5
-            }
-
-            else if (dirX != 0) {
-                this.frame++
-                if (this.frame > 5) this.frame = 0
-            }
-
-            else {
-                this.frame = 0
-            }
         }
     }
 }
 
+// ================= FRUTAS =================
 class Frutas extends Obj {
-    vel = 2
+    recomeca() {
+        this.x = 1200 + Math.random() * 600
+        this.y = CHAO - 40 - Math.random() * 180
+    }
+
+    mov_fruta(velocidadeFase) {
+        this.x -= this.vel * velocidadeFase + velocidadeMundo
+        if (this.x < -this.w) this.recomeca()
+    }
+}
+
+// ================= GALHOS =================
+class Galhos extends Obj {
+    constructor(x, y, w, h, a, isTronco = false) {
+        super(x, CHAO - h, w, h, a, CHAO - h)
+        this.isTronco = isTronco
+        this.podeColidir = true
+    }
 
     recomeca() {
         this.x = 1200 + Math.random() * 800
-        this.y = posicaoFruta(this.chaoY)
-    }
-    mov_fruta(velocidadeFase) {
-        this.x -= this.vel * velocidadeFase + velocidadeMundo
-
-        if (this.x < -this.w) {
-            this.recomeca()
-        }
-    }
-}
-
-class Galhos extends Obj {
-    vel = 2
-
-    recomeca() {
-        this.x = 1300 + Math.random() * 500
-
-        while (Math.abs(this.x - furao.x) < 200) {
-            this.x += 200
-        }
-
-        this.y = this.chaoY - this.h
+        this.y = CHAO - this.h
     }
 
     mov_galho(velocidadeFase) {
         this.x -= this.vel * velocidadeFase + velocidadeMundo
-
-        if (this.x < -this.w) {
-            this.recomeca()
-        }
+        if (this.x < -this.w) this.recomeca()
     }
 }
