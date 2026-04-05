@@ -32,10 +32,42 @@ class Furao extends Obj {
         super(x, y, w, h, a, chaoY)
         this.pontos = 0
         this.maxPontos = 20
+
+        this.frame = 0
+        this.frameTotal = 6   
+        this.frameTimer = 0
+        this.frameDelay = 6  
+        this.linhaAtual = 0 
     }
 
     desenhar(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
+        this.linhaAtual = this.noChao ? 0 : 1
+
+        // Avança o frame
+        this.frameTimer++
+        if (this.frameTimer >= this.frameDelay) {
+            this.frameTimer = 0
+            this.frame = (this.frame + 1) % this.frameTotal
+        }
+
+        const cols = 6
+        const rows = 4
+        const frameW = this.img.naturalWidth / cols
+        const frameH = this.img.naturalHeight / rows
+
+        if (!frameW || !frameH) {
+            ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
+            return
+        }
+
+        ctx.drawImage(
+            this.img,
+            this.frame * frameW,        // sx
+            this.linhaAtual * frameH,   // sy
+            frameW, frameH,             // sWidth, sHeight
+            this.x, this.y,             // dx, dy
+            this.w, this.h              // dWidth, dHeight
+        )
     }
 
     pular() {
@@ -82,14 +114,19 @@ class Frutas extends Obj {
 // ================= GALHOS =================
 class Galhos extends Obj {
     constructor(x, y, w, h, a, isTronco = false) {
-        super(x, CHAO - h, w, h, a, CHAO - h)
+        let posY = isTronco ? CHAO - h : y
+        super(x, posY, w, h, a, posY)
         this.isTronco = isTronco
         this.podeColidir = true
     }
 
     recomeca() {
         this.x = 1200 + Math.random() * 800
-        this.y = CHAO - this.h
+        if (this.isTronco) {
+            this.y = CHAO - this.h
+        } else {
+            this.y = CHAO - this.h - Math.random() * 160
+        }
     }
 
     mov_galho(velocidadeFase) {

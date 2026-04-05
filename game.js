@@ -22,17 +22,35 @@ function posicaoFruta() {
 
 // ================= OBJETOS =================
 
-// MUITAS FRUTAS
+const tiposFrutas = [
+    './img/morango.png',
+    './img/banana.png',
+    './img/uva.png',
+    './img/maca.png',
+    './img/abacaxi.png'
+]
+
+const tiposPodres = [
+    './img/banana_podre.png',
+    './img/maca_podre.png',
+    './img/lixo.png'
+]
+
+// FRUTAS BOAS
 const frutasLista = []
 for (let i = 0; i < 12; i++) {
+    const img = tiposFrutas[i % tiposFrutas.length]
     frutasLista.push(
-        new Frutas(
-            1200 + i * 180,
-            CHAO - 40,
-            50,
-            30,
-            './img/morango.png'
-        )
+        new Frutas(1200 + i * 180, CHAO - 40, 50, 50, img)
+    )
+}
+
+// FRUTAS PODRES (tiram vida ao coletar)
+const frutasPodresLista = []
+for (let i = 0; i < 6; i++) {
+    const img = tiposPodres[i % tiposPodres.length]
+    frutasPodresLista.push(
+        new Frutas(1800 + i * 300, CHAO - 40, 50, 50, img)
     )
 }
 
@@ -245,6 +263,7 @@ function aplicarPersonagem(jogador, personagem) {
 function desenha() {
     galhosLista.forEach(g => g.des_galhos())
     frutasLista.forEach(f => f.des_fruta())
+    frutasPodresLista.forEach(f => f.des_fruta())
 
     furao.desenhar(des)
     if (modoJogo === 2) furao2.desenhar(des)
@@ -286,6 +305,7 @@ function atualiza() {
 
     galhosLista.forEach(g => g.mov_galho(velocidadeFase))
     frutasLista.forEach(f => f.mov_fruta(velocidadeFase))
+    frutasPodresLista.forEach(f => f.mov_fruta(velocidadeFase))
 
     frutasLista.forEach(f => {
         let pg = 3
@@ -300,6 +320,20 @@ function atualiza() {
             somFruta.cloneNode().play()
             furao2.pontos = Math.min(furao2.maxPontos, furao2.pontos + pg)
             pontosTotal2 += pg
+        }
+    })
+
+    // FRUTAS PODRES — tiram 1 vida direto ao coletar
+    frutasPodresLista.forEach(f => {
+        if (furao.colid(f)) {
+            f.recomeca()
+            somGalho.cloneNode().play()
+            vidas--
+        }
+        if (modoJogo === 2 && furao2.colid(f)) {
+            f.recomeca()
+            somGalho.cloneNode().play()
+            vidas2--
         }
     })
 
@@ -753,6 +787,7 @@ function reiniciarJogo() {
     furao2.x = 10; furao2.y = CHAO - 160; furao2.w = 180; furao2.h = 108; furao2.chaoY = CHAO - 160
     dx = 0; dx2 = 0
     frutasLista.forEach(f => f.recomeca())
+    frutasPodresLista.forEach(f => f.recomeca())
     galhosLista.forEach(g => { g.recomeca(); g.podeColidir = true })
 }
 
