@@ -15,16 +15,19 @@ body{
     overflow: hidden;
 }
 
-/* área da tela inicial */
 .inicio{
     position: relative;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     height: 100vh;
-    padding-top: 10px;
+    padding-top: 40px; 
 }
 
+.moldura{
+    width: 500px;
+    margin-top: -40px;
+}
 
 /* texto dentro da moldura */
 .titulo{
