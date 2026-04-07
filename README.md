@@ -97,6 +97,53 @@ pequenas_patinhas2/
 ```
 ---
 
+## 📋 Requisitos do Sistema
+
+---
+
+## 🔹 Requisitos Funcionais
+
+| Código | Descrição |
+|--------|----------|
+| **RF01** | O jogador deve poder **pular e se movimentar para frente** durante o jogo. |
+| **RF02** | Cada jogador inicia com **4 vidas**. A cada 5 colisões com obstáculos, perde 1 vida. |
+| **RF03** | O jogo deve possuir um **sistema de pontuação**, exibido na tela. |
+| **RF04** | Devem existir **frutas coletáveis** que concedem **+3 pontos**. |
+| **RF05** | Devem existir **obstáculos** que causam **-2 pontos** e contam como colisão. |
+| **RF06** | O jogo deve possuir **3 fases**, com aumento de dificuldade conforme a pontuação. |
+| **RF07** | O jogo deve permitir **modo 1 jogador e 2 jogadores**. |
+| **RF08** | O sistema deve conter as telas: **Menu, Seleção de Personagem, Jogo, Pausa, Vitória e Game Over**. |
+| **RF09** | Deve existir uma tela **"Sobre"** com informações da desenvolvedora. |
+| **RF10** | O jogador deve poder **reiniciar ou voltar ao menu** após o fim da partida. |
+| **RF11** | O jogo deve possuir **efeitos sonoros** (pulo, coleta, colisão, etc.). |
+
+---
+
+## ⚙️ Regras de Negócio
+
+| Código | Descrição |
+|--------|----------|
+| **RN01** | A dificuldade aumenta a cada fase, com **maior velocidade do jogo**. |
+| **RN02** | Cada fase deve possuir um **cenário diferente**. |
+| **RN03** | O jogador vence ao completar a **fase 3 com pelo menos 1 vida**. |
+| **RN04** | O jogo termina em **Game Over** quando as vidas chegam a 0. |
+| **RN05** | No modo 2 jogadores, vence quem tiver **mais pontos ao final**. |
+| **RN06** | O jogo deve possuir uma **seção de instruções** explicando controles e regras. |
+
+---
+
+## 🛠️ Requisitos Não Funcionais
+
+| Código | Descrição |
+|--------|----------|
+| **RNF01** | O jogo deve ser desenvolvido em **JavaScript puro**, sem uso de frameworks. |
+| **RNF02** | Deve rodar diretamente no navegador usando **HTML5 Canvas**. |
+| **RNF03** | A interface deve ser adaptada para **telas de computador**. |
+| **RNF04** | O jogo deve manter boa performance, com execução fluida (≈ **60 FPS**). |
+
+---
+---
+
 ## ⚙️ Funcionalidades Técnicas
 
 **Renderização via Canvas** — todo o jogo é desenhado com a API canvas 2D do HTML5
